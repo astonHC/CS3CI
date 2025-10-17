@@ -20,7 +20,7 @@ As of right now, what with this implementation being a WIP, implementation in te
 To build this project, it is a simple case of running the following within this folder:
 
 ```
-gcc gcc --std=c99 -pedantic main.c pso.c -o pso -lm
+gcc --std=c99 -pedantic main.c pso.c -o pso -lm
 
 ./pso
 ``` 
