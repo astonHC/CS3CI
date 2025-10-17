@@ -95,6 +95,16 @@
 
     } TSP_TOUR;
 
+    // DEFINE THE BASIS FOR WORKING WITH 
+    // ANT COLONY OPTIMISATION
+    typedef struct
+    {   
+        double PHEROMONE[TSP_MAX_CITIES][TSP_MAX_CITIES];
+        int BEST_PATH[TSP_MAX_CITIES + 1];
+        int BEST_DIST;
+
+    } TSP_ACO_STATE;
+
     // ALL ENCOMPASSING TSP STRUCT TO ACCESS THESE METHODS
     typedef struct
     {
@@ -103,6 +113,7 @@
         TSP_TOUR TOUR;
         int CITY_COUNT;
         TSP_ALGO ALGO;
+        TSP_ACO_STATE ACO;
 
     } TSP_STATE;
 
