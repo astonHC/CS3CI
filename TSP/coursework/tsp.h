@@ -55,9 +55,9 @@
     // THAT CAN BE TESTED AGAINST
     typedef enum
     {
-        TSP_BRUTE_FORCE,
         TSP_NN,
-        TSP_HELD_KARP
+        TSP_TWO_OPT,
+        TSP_ACO
 
     } TSP_ALGO;
 
