@@ -150,9 +150,9 @@
                 } while(0)
 
     #define TSP_ALGO_TYPE(VALUE) \
-            ((VALUE) == TSP_BRUTE_FORCE ? "BRUTE FORCE" : \
-            (VALUE) == TSP_NN ? "NEAREST NEIGHBOUR" : \
-            (VALUE) == TSP_HELD_KARP ? "HELD KARP" : \
+            ((VALUE) == TSP_NN ? "NEAREST NEIGHBOUR" : \
+            (VALUE) == TSP_TWO_OPT ? "TWO OPT LOCAL SEARCH" : \
+            (VALUE) == TSP_ACO ? "ANT COLONY" : \
             "UNKNOWN")
 
     #define TSP_CITY_NAME(NAME, INDEX, X, Y) \
