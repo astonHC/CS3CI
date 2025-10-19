@@ -51,18 +51,18 @@ int TSP_INIT(TSP_STATE* STATE)
     // WITH THE DISTANCE MATRIX BETWEEN THEM 
     for(int INDEX = 0; INDEX < TSP_MAX_CITIES; INDEX++)
     {
-        for(int JINDEX = 0; JINDEX < TSP_MAX_CITIES; JINDEX++)
+        for(int ITERATOR = 0; ITERATOR < TSP_MAX_CITIES; ITERATOR++)
         {
             // HAVE WE REACHED THE MAX AMOUNT OF ITERATIONS?
             // THIS WAY, WE CAN DO A SAFER CHECK
             if(!TSP_VALID_CITY(INDEX, TSP_MAX_CITIES) || 
-                !TSP_VALID_CITY(JINDEX, TSP_MAX_CITIES))
+                !TSP_VALID_CITY(ITERATOR, TSP_MAX_CITIES))
             {
                 goto TSP_OOB;
             }
 
             // ASSIGN THE CORRESPONDING VALUES TO EACH INDEX
-            STATE->DIST.MATRIX[INDEX][JINDEX] = (INDEX == JINDEX) ? 0 : INT_MAX;
+            STATE->DIST.MATRIX[INDEX][ITERATOR] = (INDEX == ITERATOR) ? 0 : INT_MAX;
         }
     }
 
