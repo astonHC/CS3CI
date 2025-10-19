@@ -138,7 +138,7 @@ void TSP_CALC_DIST(TSP_STATE* STATE)
                 STATE->DIST.MATRIX[INDEX][ITERATOR] = DISTANCE;
 
                 TSP_DEBUG_DIST(DIST, TSP_ERROR_NONE, INDEX, ITERATOR, DISTANCE, 
-                    " - %s %s", STATE->CITY[INDEX].NAME, STATE->CITY[ITERATOR].NAME);
+                    " - %s TO %s", STATE->CITY[INDEX].NAME, STATE->CITY[ITERATOR].NAME);
             }
             else
             {
