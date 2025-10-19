@@ -140,6 +140,7 @@
         TSP_ALGO ALGO;
         TSP_ACO_STATE ACO;
         TSP_STATS STATS;
+        TSP_STAT_DATA STAT_DATA;
 
     } TSP_STATE;
 
