@@ -167,13 +167,13 @@
     #define TSP_HANDLE(OP, ERROR, MSG, ...) \
                 do { \
                     printf("\n[INFO] %c -> %-18s   " MSG "\n", \
-                        (char)OP, TSP_ERR[ERROR], ##__VA_ARGS__); \
+                        (char)OP, TSP_ERR_MSG[ERROR], ##__VA_ARGS__); \
                 } while(0)
 
     #define TSP_ERROR_HANDLE(OP, ERROR, MSG, ...) \
                 do { \
                     printf("[ERROR] %c -> %-18s   " MSG "\n", \
-                        (char)OP, TSP_ERR[ERROR], ##__VA_ARGS__); \
+                        (char)OP, TSP_ERR_MSG[ERROR], ##__VA_ARGS__); \
                 } while(0)
 
     #define TSP_ALGO_TYPE(VALUE) \
@@ -193,7 +193,7 @@
     #define TSP_DEBUG_DIST(OP, ERROR, FROM, TO, DIST, MSG, ...)                                     \
         do {                                                                                        \
             printf("[DEBUG] %c -> %s ->     FROM: %d,   TO: %d,     DIST: %1d" MSG "\n",            \
-                (char)OP, TSP_ERR[ERROR], FROM, TO, DIST, ##__VA_ARGS__);                           \
+                (char)OP, TSP_ERR_MSG[ERROR], FROM, TO, DIST, ##__VA_ARGS__);                           \
         } while(0)
 
     /////////////////////////////////////////////////////
