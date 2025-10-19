@@ -8,18 +8,30 @@
 
 #include "tsp.h"
 
-int main(void)
+int main(int argc, char* argv[])
 {
     printf("HARRY CLARK - CS3_CI TSP SOLUTION\n");
-    
+
+    if(argc != 2)
+    {
+        printf("USAGE: %s, --ALGORITHM\n", argv[0]);
+        return 1;
+    }
+
+    // DISCERN THE ALGO TYPE BASED ON PROVIDED ARG
+    TSP_ALGO ALGO = TSP_ALGO_ARG(argv[1]);
+
     TSP_STATE STATE;    
-    TSP_INIT(&STATE);
+    TSP_INIT(&STATE, ALGO);
 
     TSP_ADD_CITY(&STATE, "LONDON", 0, 0);
     TSP_ADD_CITY(&STATE, "PARIS", 344, 0);
     TSP_ADD_CITY(&STATE, "MADRID", 1495, 173);
     TSP_ADD_CITY(&STATE, "SHANGHAI", 5000, 2812);
 
-    TSP_NEAREST(&STATE);
+    // ALGO CHOICE WILL NOW DYNAMICALLY EXECUTE
+    // PROVIDED ALGO TYPE AS PER THE SWITCH
+    TSP_ALGO_CHOICE(&STATE, ALGO);
+
     return 0;
 }
