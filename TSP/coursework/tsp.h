@@ -105,6 +105,18 @@
 
     } TSP_ACO_STATE;
 
+    // DEFINE THE BASIS FOR DETERMINING
+    // THE RUNTIME STATISTICS FOR COMPARISON
+    typedef struct
+    {
+        char NAME[32];
+        int SAMPLE_COUNT;
+        int COMPUTED;
+        double MEAN;
+        double DATA[TSP_MAX_SAMPLES];
+        
+    } TSP_STATS;
+
     // ALL ENCOMPASSING TSP STRUCT TO ACCESS THESE METHODS
     typedef struct
     {
