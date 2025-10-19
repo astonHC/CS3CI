@@ -117,7 +117,7 @@
 
     #define TSP_HANDLE(OP, ERROR, MSG, ...) \
                 do { \
-                    printf("\n[INFO] %c -> %-18s   " MSG "\n", \
+                    printf("\n[INFO] %c -> %-18s   " MSG, \
                         (char)OP, TSP_ERR[ERROR], ##__VA_ARGS__); \
                 } while(0)
 
@@ -133,6 +133,13 @@
             (VALUE) == TSP_HELD_KARP ? "HELD KARP" : \
             "UNKNOWN")
 
+    // SIMILAR TO ABOVE BUT FOR PARSING THE COMMAND LINE ARG
+    #define TSP_ALGO_ARG(VALUE) \
+            (strcmp((VALUE), "--bf") == 0 ? TSP_BRUTE_FORCE : \
+            strcmp((VALUE), "--nn") == 0 ? TSP_NN : \
+            strcmp((VALUE), "--hk") == 0 ? TSP_HELD_KARP : \
+            -1)
+
     #define TSP_CITY_NAME(NAME, INDEX, X, Y) \
                 do { \
                     printf("[CITY] -> %12s | INDEX: %d | X: %d  Y: %d\n", NAME, INDEX, X, Y); \
@@ -144,7 +151,7 @@
     // OF THE DISTANCES BETWEEN CITIES (HELPS ESP. FOR RANDOM)
     #define TSP_DEBUG_DIST(OP, ERROR, FROM, TO, DIST, MSG, ...)                                     \
         do {                                                                                        \
-            printf("[DEBUG] %c -> %s ->     FROM: %d,   TO: %d,     DIST: %1d" MSG "\n",            \
+            printf("[DEBUG] %c -> %s ->     FROM: %d,   TO: %d,     DIST: %1d" MSG  "\n",            \
                 (char)OP, TSP_ERR[ERROR], FROM, TO, DIST, ##__VA_ARGS__);                           \
         } while(0)
 
@@ -152,7 +159,7 @@
     //             TSP FUNCTION PROTOTYPES
     /////////////////////////////////////////////////////
 
-    int TSP_INIT(TSP_STATE*);
+    int TSP_INIT(TSP_STATE*, TSP_ALGO);
     int TSP_ADD_CITY(TSP_STATE*, const char*, int, int);
     int TSP_EUC_DIST(const TSP_CITY*, const TSP_CITY*);
     void TSP_CALC_DIST(TSP_STATE*);
@@ -164,6 +171,8 @@
     extern int TSP_BEST_DIST;
     extern int TSP_BEST_PATH[TSP_MAX_CITIES + 1];
     extern const char* TSP_ERR[];
+
+    int TSP_ALGO_CHOICE(TSP_STATE*, TSP_ALGO ALGO);
 
 #endif
 #endif
