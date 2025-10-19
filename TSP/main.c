@@ -10,9 +10,9 @@
 
 int main(void)
 {
-    TSP_STATE STATE;
     printf("HARRY CLARK - CS3_CI TSP SOLUTION\n");
     
+    TSP_STATE STATE;    
     TSP_INIT(&STATE);
 
     TSP_ADD_CITY(&STATE, "LONDON", 0, 0);
@@ -20,8 +20,6 @@ int main(void)
     TSP_ADD_CITY(&STATE, "MADRID", 1495, 173);
     TSP_ADD_CITY(&STATE, "SHANGHAI", 5000, 2812);
 
-    TSP_CALC_DIST(&STATE);
     TSP_NEAREST(&STATE);
-    
     return 0;
 }
