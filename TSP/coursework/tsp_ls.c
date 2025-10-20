@@ -17,15 +17,13 @@
 //
 // THE FOLLOWING GETS A TEMPORARY SWAP SOLUTION BASED ON THE START,
 // MAPS TO THE END, REVERSES AND INC/DEC ACCORDINGLY 
-void TSP_REVERSE(int* TOUR, int START, int END)
+static void TSP_REVERSE(int* TOUR, int START, int END)
 {
     while(START < END)
     {
         int SWAP = TOUR[START];
-        TOUR[START] = TOUR[END];
-        TOUR[END] = SWAP;
-        START++;
-        END--;
+        TOUR[START++] = TOUR[END];
+        TOUR[END--] = SWAP;
     }
 }
 
@@ -34,7 +32,7 @@ void TSP_REVERSE(int* TOUR, int START, int END)
 //
 // MAPS TO AND FROM BASED ON CURRENT OFFSET AND 
 // ADDS THAT TO THE CONCURRENT MATRIX ADDITION 
-int TSP_TOUR_DIST(TSP_STATE* STATE, int* TOUR)
+static int TSP_TOUR_DIST(TSP_STATE* STATE, int* TOUR)
 {
     int TOTAL = 0;
     int FROM_POS = 0;
