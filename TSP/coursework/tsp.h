@@ -28,10 +28,7 @@
     #define     TSP_OPT_ON              1
 
     #define     TSP_MAX_CITIES      50          // MAX AMOUNT WE HAVE AT A GIVEN TIME
-    #define     TSP_START           0           // DEFACTO START POINT FOR CITY INDEXXED AT 0
     #define     TSP_CSV_MAX_LINE    256         // ARBITRARY BUFFER VALUE FOR MAX LINE COUNT
-    #define     TSP_MAX_SAMPLES     100         // ARBITRARY VALUE FOR STATS
-    #define     TSP_MAX_ITER        1000
     #define     TSP_ACO_ANTS        20
     #define     TSP_ACO_ALPHA       1.0         // ANT COLONY IMPORTANCE       
     #define     TSP_ACO_HEUR        2.0         // ANT COLONY HEURISTIC 
@@ -187,7 +184,7 @@
     // SIMPLE MACROS FOR HANDLING THE DISTANCE BETWEEN CITIES
     // PROVIDES MORE OF A VERBOSE EXPLAINATION FOR THE HANDLINGS
     // OF THE DISTANCES BETWEEN CITIES (HELPS ESP. FOR RANDOM)
-    
+
     #if TSP_DEBUG_OPT
     #define TSP_DEBUG_DIST(OP, ERROR, FROM, TO, DIST, MSG, ...)                                     \
         do {                                                                                        \
