@@ -56,7 +56,7 @@
     typedef enum
     {
         TSP_NN,
-        TSP_TWO_OPT,
+        TSP_LS,
         TSP_ACO
 
     } TSP_ALGO;
@@ -151,14 +151,14 @@
 
     #define TSP_ALGO_TYPE(VALUE) \
             ((VALUE) == TSP_NN ? "NEAREST NEIGHBOUR" : \
-            (VALUE) == TSP_TWO_OPT ? "TWO OPT LOCAL SEARCH" : \
+            (VALUE) == TSP_LS ? "TWO OPT LOCAL SEARCH" : \
             (VALUE) == TSP_ACO ? "ANT COLONY" : \
             "UNKNOWN")
 
     // SIMILAR TO ABOVE BUT FOR PARSING THE COMMAND LINE ARG
     #define TSP_ALGO_ARG(VALUE) \
             (strcmp((VALUE), "--nn") == 0 ? TSP_NN : \
-            strcmp((VALUE), "--ls") == 0 ? TSP_TWO_OPT : \
+            strcmp((VALUE), "--ls") == 0 ? TSP_LS : \
             strcmp((VALUE), "--ac") == 0 ? TSP_ACO : \
             -1)
 
@@ -185,6 +185,7 @@
     int TSP_EUC_DIST(const TSP_CITY*, const TSP_CITY*);
     void TSP_CALC_DIST(TSP_STATE*);
     int TSP_NEAREST(TSP_STATE*);
+    int TSP_TWO_OPT(TSP_STATE*);
     void TSP_RESULT(const TSP_STATE*);
 
     int TSP_RAND(TSP_STATE*);
