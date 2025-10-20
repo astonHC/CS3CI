@@ -141,7 +141,7 @@
 
     #define TSP_HANDLE(OP, ERROR, MSG, ...) \
                 do { \
-                    printf("\n[INFO] %c -> %-18s   " MSG "\n", \
+                    printf("[INFO] %c -> %- 11s" MSG "\n", \
                         (char)OP, TSP_ERR_MSG[ERROR], ##__VA_ARGS__); \
                 } while(0)
 
@@ -169,15 +169,15 @@
                     printf("[CITY] -> %12s | INDEX: %d | X: %d  Y: %d\n", NAME, INDEX, X, Y); \
                 } while(0)
 
-    #define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)   \
-    do {                                    \
-        printf("[IMPROVEMENT] %s | COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST); \
-        for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)        \
-        {                                                       \
-            printf("%d -> %s ", PATH[INDEX], STATE->CITY[PATH[INDEX]].NAME);  \
-        }                                                       \
-        printf("\n");                                           \
-    } while(0)
+    #define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)                                           \
+        do { \
+            printf("[IMPROVEMENT] %s | TOTAL COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST);    \
+            for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)                                    \
+            {                                                                                   \
+                printf("%d -> %s ", PATH[INDEX], STATE->CITY[PATH[INDEX]].NAME);                \
+            }                                                                                   \
+            printf("\n");                                                                       \
+        } while(0)
 
     // SIMPLE MACROS FOR HANDLING THE DISTANCE BETWEEN CITIES
     // PROVIDES MORE OF A VERBOSE EXPLAINATION FOR THE HANDLINGS
