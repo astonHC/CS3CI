@@ -105,31 +105,6 @@
 
     } TSP_ACO_STATE;
 
-    // DEFINE THE BASIS FOR DETERMINING
-    // THE RUNTIME STATISTICS FOR COMPARISON
-    typedef struct
-    {
-        char NAME[32];
-        int SAMPLE_COUNT;
-        int COMPUTED;
-        double MEAN;
-        double DATA[TSP_MAX_SAMPLES];
-        
-    } TSP_STATS;
-
-    // ALL ENCOMPASSING STORE OF ALL OF THE ALGORITHMS
-    // TO COMPARE AGAINST, THEIR CHARACTERISTICS, ETC
-    typedef struct
-    {
-        TSP_STATS ALGORITHM_A;
-        TSP_STATS ALGORITHM_B;
-        
-        int TOTAL_SAMPLES;
-        double CRITICAL_T;
-        double CRITICAL_VALUE;
-
-    } TSP_STAT_DATA;
-
     // ALL ENCOMPASSING TSP STRUCT TO ACCESS THESE METHODS
     typedef struct
     {
@@ -139,8 +114,6 @@
         int CITY_COUNT;
         TSP_ALGO ALGO;
         TSP_ACO_STATE ACO;
-        TSP_STATS STATS;
-        TSP_STAT_DATA STAT_DATA;
 
     } TSP_STATE;
 
@@ -181,6 +154,13 @@
             (VALUE) == TSP_TWO_OPT ? "TWO OPT LOCAL SEARCH" : \
             (VALUE) == TSP_ACO ? "ANT COLONY" : \
             "UNKNOWN")
+
+    // SIMILAR TO ABOVE BUT FOR PARSING THE COMMAND LINE ARG
+    #define TSP_ALGO_ARG(VALUE) \
+            (strcmp((VALUE), "--nn") == 0 ? TSP_NN : \
+            strcmp((VALUE), "--ls") == 0 ? TSP_TWO_OPT : \
+            strcmp((VALUE), "--ac") == 0 ? TSP_ACO : \
+            -1)
 
     #define TSP_CITY_NAME(NAME, INDEX, X, Y) \
                 do { \
