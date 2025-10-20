@@ -23,6 +23,9 @@
     #define USE_TSP
 #else
     #define USE_TSP
+    
+    #define     TSP_OPT_OFF             0
+    #define     TSP_OPT_ON              1
 
     #define     TSP_MAX_CITIES      50          // MAX AMOUNT WE HAVE AT A GIVEN TIME
     #define     TSP_START           0           // DEFACTO START POINT FOR CITY INDEXXED AT 0
@@ -42,6 +45,8 @@
 
     #define     TSP_VALID_DIST(VALUE)           ((VALUE) >= 0 && (VALUE) < INT_MAX)
     #define     TSP_VALID_CITY(VALUE, MAX)      ((VALUE) >= 0 && (VALUE) < (MAX))
+
+    #define     TSP_DEBUG_OPT                   TSP_OPT_OFF 
 
         // SIMPLE IMPLEMENTATION FOR BEING ABLE TO CATCH
         // AND STRINGIFY ERROR MESSAGES FOR ALLOCATING STRUCTS
@@ -182,11 +187,16 @@
     // SIMPLE MACROS FOR HANDLING THE DISTANCE BETWEEN CITIES
     // PROVIDES MORE OF A VERBOSE EXPLAINATION FOR THE HANDLINGS
     // OF THE DISTANCES BETWEEN CITIES (HELPS ESP. FOR RANDOM)
+    
+    #if TSP_DEBUG_OPT
     #define TSP_DEBUG_DIST(OP, ERROR, FROM, TO, DIST, MSG, ...)                                     \
         do {                                                                                        \
             printf("[DEBUG] %c -> %s ->     FROM: %d,   TO: %d,     DIST: %1d" MSG "\n",            \
                 (char)OP, TSP_ERR_MSG[ERROR], FROM, TO, DIST, ##__VA_ARGS__);                           \
         } while(0)
+    #else
+        #define TSP_DEBUG_DIST(OP, ERROR, FROM, TO, DIST, MSG, ...) ((void)0)
+    #endif
 
     /////////////////////////////////////////////////////
     //             TSP FUNCTION PROTOTYPES
