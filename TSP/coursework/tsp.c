@@ -166,30 +166,3 @@ int TSP_NEAREST(TSP_STATE* STATE)
 
     return 0;
 }
-
-// SIMPLE DISPATCH FUNCTION FOR GETTING THE 
-// CORRESPONDING ALGORITHM TYPE - PREVENTING UNWANTED EXECUTIONS
-int TSP_ALGO_CHOICE(TSP_STATE* STATE, TSP_ALGO ALGO)
-{
-    switch (ALGO)
-    {
-        case TSP_NN:
-            TSP_NEAREST(STATE);
-            break;
-
-        case TSP_ACO:
-            printf("NOT YET IMPLEMENTED");
-            return 1;
-
-        case TSP_LS:
-            TSP_TWO_OPT(STATE);
-            return 1;
-    
-        default:
-            printf("INVALID ALGORITHM\n");
-            return 1;
-        break;
-    }
-
-    return 0;
-}
