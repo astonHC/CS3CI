@@ -71,3 +71,11 @@ It is just a simple case of running the following within this folder
 gcc --std=c99 -pedantic main.c tsp.c -o tsp -lm
 
 ./tsp
+``` 
+
+To buld the coursework ver, do the following
+```
+gcc --std=c99 -pedantic main.c tsp.c tsp_ls.c util.c -o tsp_cw -lm
+
+./tsp_cw
+```
