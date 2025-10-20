@@ -38,6 +38,8 @@
     #define     TSP_SEED()                      srand((unsigned int)time(NULL))     // RANDOM SEED WITH TYPE CAST
     #define     TSP_RAND_CITY(VALUE)            (rand() % (VALUE))                  // RANDOM CITY AGAINST A VALUE (MAX_CITIES)
 
+    #define     TSP_RAND_POS(VALUE)             (rand() % (TSP_STATE.CITY_COUNT))
+
     #define     TSP_VALID_DIST(VALUE)           ((VALUE) >= 0 && (VALUE) < INT_MAX)
     #define     TSP_VALID_CITY(VALUE, MAX)      ((VALUE) >= 0 && (VALUE) < (MAX))
 
@@ -167,6 +169,16 @@
                     printf("[CITY] -> %12s | INDEX: %d | X: %d  Y: %d\n", NAME, INDEX, X, Y); \
                 } while(0)
 
+    #define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)   \
+    do {                                    \
+        printf("[IMPROVEMENT] %s | COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST); \
+        for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)        \
+        {                                                       \
+            printf("%d -> %s ", PATH[INDEX], STATE->CITY[PATH[INDEX]].NAME);  \
+        }                                                       \
+        printf("\n");                                           \
+    } while(0)
+
     // SIMPLE MACROS FOR HANDLING THE DISTANCE BETWEEN CITIES
     // PROVIDES MORE OF A VERBOSE EXPLAINATION FOR THE HANDLINGS
     // OF THE DISTANCES BETWEEN CITIES (HELPS ESP. FOR RANDOM)
@@ -180,7 +192,7 @@
     //             TSP FUNCTION PROTOTYPES
     /////////////////////////////////////////////////////
 
-    int TSP_INIT(TSP_STATE*);
+    int TSP_INIT(TSP_STATE*, TSP_ALGO);
     int TSP_ADD_CITY(TSP_STATE*, const char*, int, int);
     int TSP_EUC_DIST(const TSP_CITY*, const TSP_CITY*);
     void TSP_CALC_DIST(TSP_STATE*);
@@ -189,10 +201,21 @@
     void TSP_RESULT(const TSP_STATE*);
 
     int TSP_RAND(TSP_STATE*);
+    int TSP_LOAD_CSV(TSP_STATE*, const char*);
 
     extern int TSP_BEST_DIST;
     extern int TSP_BEST_PATH[TSP_MAX_CITIES + 1];
-    extern const char* TSP_ERR[];
+
+    static const char* TSP_ERR_MSG[] =
+    {
+        "OK",
+        "INDEX OUT OF BOUNDS",
+        "MAX CITIES EXCEEDED",
+        "MAX DISTANCE EXCEEDED",
+        "MAX VALUE FOR PATHING"
+    };
+
+    int TSP_ALGO_CHOICE(TSP_STATE*, TSP_ALGO ALGO);
 
 #endif
 #endif
