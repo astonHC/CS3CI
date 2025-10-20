@@ -205,6 +205,7 @@
     void TSP_CALC_DIST(TSP_STATE*);
     int TSP_NEAREST(TSP_STATE*);
     int TSP_TWO_OPT(TSP_STATE*);
+    void TSP_ACO_INIT(TSP_ACO_STATE*, int);
     void TSP_RESULT(const TSP_STATE*);
 
     int TSP_RAND(TSP_STATE*);
