@@ -26,6 +26,15 @@
 #else
     #define USE_PSO
 
+    // BECAUSE GNU IS BEING WEIRD
+    #ifndef M_PI
+        #define M_PI 3.14159265358979323846
+    #endif
+
+    #ifndef M_PI
+        #define M_PI 3.14159265358979323846
+    #endif
+
     #define         PSO_MAX_PARTICLES           30
     #define         PSO_MAX_ITERATIONS          100
     #define         PSO_MAX_DIMENSIONS           10
@@ -33,6 +42,20 @@
     #define         PSO_WEIGHT                      0.8
     #define         PSO_COG                         1.5
     #define         PSO_SOC                         1.5
+    #define         PSO_RANGE_EXPO                  0.1
+
+    #define         PSO_INERTIA_MIN                 0.1
+    #define         PSO_INERTIA_MAX                 1.0
+    #define         PSO_VELOCITY_CLAMP              0.2
+    #define         PSO_DAMP                        0.5
+    #define         PSO_CONV_THRES                  0.01
+    #define         PSO_STAGNATE                    20
+    #define         PSO_ANTENNA_WLENGTH             1.0
+    #define         PSO_ANTENNA_SPACE               0.5
+    #define         PSO_ANTENNA_SAMPLES             180
+    #define         PSO_MAINLOBE_WIDTH              0.1
+
+    #define         PSO_LIMIT                       5.0
 
     #define         PSO_VALID_PARTICLE(VALUE, MAX)              ((VALUE) >= 0 && (VALUE) < (MAX))
     #define         PSO_VALID_DIMENSIONS(VALUE, MAX)            ((VALUE) >= 0 && (VALUE) < (MAX))
@@ -145,7 +168,6 @@
 
         } PSO_ERROR_OP;
 
-
         #define PSO_HANDLE(OP, ERROR, MSG, ...) \
                 do { \
                     printf("\n[INFO] %c -> %-20s   " MSG "\n", \
@@ -158,15 +180,32 @@
                         (char)OP, PSO_ERR[ERROR], ##__VA_ARGS__); \
                 } while(0)
 
-        #define PSO_DEBUG_ITER(ITER, GBEST, MSG, ...) \
-                do { \
-                    printf("[ITER %3d] GBEST_FIT: %.6f   " MSG "\n", ITER, GBEST, ##__VA_ARGS__); \
-                } while(0)
-
         #define PSO_FITNESS_NAME(VALUE) \
             ((VALUE) == PSO_SIMPLE ? "SIMPLE" : \
             (VALUE) == PSO_VALLEY ? "VALLEY" : \
             "UNKNOWN")
+
+        #define PSO_IMPROVE(ITER, FITNESS, POSITION, DIMENSIONS)                                    \
+        do {                                                                                    \
+            printf("[PSO-ADAPTIVE] ITERATION %d | FITNESS: %.6f | SOLUTION: ",                 \
+                ITER, FITNESS);                                                              \
+            for(int DIM = 0; DIM < DIMENSIONS; DIM++)                                           \
+            {                                                                                   \
+                printf("%.4f", POSITION[DIM]);                                                  \
+                if(DIM < DIMENSIONS - 1) printf(", ");                                          \
+            }                                                                                   \
+            printf("\n");                                                                       \
+        } while(0)
+
+        static const char* PSO_ERR[] =
+        {
+            "OK",
+            "INDEX OUT OF BOUNDS",
+            "PARTICLE ERROR",
+            "CONVERGENCE ERROR",
+            "FITNESS ERROR",
+            "DIMENSION ERROR"
+        };
 
         /////////////////////////////////////////////////////
         //             PSO FUNCTION PROTOTYPES
@@ -174,6 +213,7 @@
 
         int PSO_INIT(PSO*, int, PSO_FITNESS_TYPE);
         void PSO_SET_BOUNDS(PSO*, int, double, double);
+        int PSO_OPTIMIZE_ANTENNA(PSO*, int, double);
 
 #endif
 #endif
