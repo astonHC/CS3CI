@@ -29,11 +29,21 @@
 
     #define     TSP_MAX_CITIES      50          // MAX AMOUNT WE HAVE AT A GIVEN TIME
     #define     TSP_CSV_MAX_LINE    256         // ARBITRARY BUFFER VALUE FOR MAX LINE COUNT
-    #define     TSP_ACO_ANTS        20
+    #define     TSP_ACO_ANTS        100
+    #define     TSP_ACO_PHER_RATE   1.0
     #define     TSP_ACO_ALPHA       1.0         // ANT COLONY IMPORTANCE       
     #define     TSP_ACO_HEUR        2.0         // ANT COLONY HEURISTIC 
     #define     TSP_ACO_EVAP        0.5         // ANT COLONY EVAPORATION RATE 
-    #define     TSP_ACO_DEPO        100.0       // ANT COLONY PHEROMONE DEPOSIT             
+    #define     TSP_ACO_DEPO        10.0       // ANT COLONY PHEROMONE DEPOSIT   
+    #define     TSP_ACO_ELITE       1.5         // ANT COLONY ELITE FACTOR
+    #define     TSP_ACO_ITER_RATE   50          // ANT COLONY ITERATION RATE
+    #define     TSP_DIAG_INTERVAL   100
+    
+    // ANT COLONY PHERMONE MIN AND MAX EDGES
+    // USED TO PREVENT SPILLOVER INTO OOB INDEXXING
+
+    #define     TSP_ACO_PHER_MIN    0.001       
+    #define     TSP_ACO_PHER_MAX    10.0
 
     #define     TSP_SEED()                      srand((unsigned int)time(NULL))     // RANDOM SEED WITH TYPE CAST
     #define     TSP_RAND_CITY(VALUE)            (rand() % (VALUE))                  // RANDOM CITY AGAINST A VALUE (MAX_CITIES)
@@ -128,6 +138,8 @@
         TSP_ERROR_OOB,
         TSP_ERROR_CITY,
         TSP_ERROR_DIST,
+        TSP_ERROR_PATH,
+        TSP_ERROR_ACO
 
     } TSP_ERROR;
 
@@ -137,7 +149,8 @@
         OOB = 'O',
         CITY = 'C',
         DIST = 'D',
-        PATH = 'P'
+        PATH = 'P',
+        ACO = 'A'
 
     } TSP_ERROR_OP;
 
@@ -171,14 +184,15 @@
                     printf("[CITY] -> %12s | INDEX: %d | X: %d  Y: %d\n", NAME, INDEX, X, Y); \
                 } while(0)
 
-    #define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)                                           \
+    #define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)                                               \
         do { \
-            printf("[IMPROVEMENT] %s | TOTAL COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST);    \
-            for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)                                    \
-            {                                                                                   \
-                printf("%d -> %s ", PATH[INDEX], STATE->CITY[PATH[INDEX]].NAME);                \
-            }                                                                                   \
-            printf("\n");                                                                       \
+            printf("[IMPROVEMENT] %s | TOTAL COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST);        \
+            for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)                                        \
+            {                                                                                       \
+                printf("%s %1d", STATE->CITY[PATH[INDEX]].NAME, PATH[INDEX]);                       \
+                if(INDEX < CITY_COUNT) printf(" -> ");                                              \
+            }                                                                                       \
+            printf("\n");                                                                           \
         } while(0)
 
     // SIMPLE MACROS FOR HANDLING THE DISTANCE BETWEEN CITIES
@@ -206,6 +220,7 @@
     int TSP_NEAREST(TSP_STATE*);
     int TSP_TWO_OPT(TSP_STATE*);
     void TSP_ACO_INIT(TSP_ACO_STATE*, int);
+    int TSP_ACO_BASE(TSP_STATE*, int);
     void TSP_RESULT(const TSP_STATE*);
 
     int TSP_RAND(TSP_STATE*);
@@ -220,7 +235,8 @@
         "INDEX OUT OF BOUNDS",
         "MAX CITIES EXCEEDED",
         "MAX DISTANCE EXCEEDED",
-        "MAX VALUE FOR PATHING"
+        "MAX VALUE FOR PATHING",
+        "COULD NOT FIND ANT COLONY"
     };
 
     int TSP_ALGO_CHOICE(TSP_STATE*, TSP_ALGO ALGO);
