@@ -84,7 +84,7 @@ The following will index through each city that is available and print out the c
 While this is, of course, the modularised version of my coursework variants of the lab contents, this index should provide clarity on what everything is:
 
 - main.c - uhhh duh?
-- tsp.c - my original tsp.c implementation focussing on Nearest Neighbour
+- tsp.c - my original [tsp.c](https://github.com/astonHC/CS3_CI/blob/main/TSP/tsp.c) implementation focussing on Nearest Neighbour
 - tsp_ls.c - my first novel variant, focussing on Linear Search (Two Opt)
 - tsp_aco.c - my second novel variant, focussing on Ant Colony Optimisation and the livelihood of a greedy solution involving Ant Pheromone's
 - util.c - functions that are inlined at compile time
