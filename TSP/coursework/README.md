@@ -79,6 +79,18 @@ The following will index through each city that is available and print out the c
         } while(0)
 ``` 
 
+## Folder Structure:
+
+While this is, of course, the modularised version of my coursework variants of the lab contents, this index should provide clarity on what everything is:
+
+- main.c - uhhh duh?
+- tsp.c - my original tsp.c implementation focussing on Nearest Neighbour
+- tsp_ls.c - my first novel variant, focussing on Linear Search (Two Opt)
+- tsp_aco.c - my second novel variant, focussing on Ant Colony Optimisation and the livelihood of a greedy solution involving Ant Pheromone's
+- util.c - functions that are inlined at compile time
+- tsp.h - all of the methods and signatures pertaining towards the TSP in general
+
+
 ## Academic Reference:
 
 [Implementing Local Search - Lourenço, Martin, Stützle (2003)](https://www.metaheuristics.org/downloads/mic2001-ils.pdf)
