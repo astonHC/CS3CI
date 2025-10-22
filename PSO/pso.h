@@ -48,9 +48,7 @@
     #define         PSO_INERTIA_MAX                 1.0
     #define         PSO_VELOCITY_CLAMP              0.2
     #define         PSO_DAMP                        0.5
-    #define         PSO_CONV_THRES                  0.01
-    #define         PSO_STAGNATE                    20
-    #define         PSO_ANTENNA_WLENGTH             1.0
+    #define         PSO_ANTENNA_WAVELENGTH          1.0
     #define         PSO_ANTENNA_SPACE               0.5
     #define         PSO_ANTENNA_SAMPLES             180
     #define         PSO_MAINLOBE_WIDTH              0.1
