@@ -60,6 +60,47 @@ if(DELTA < 0)
 }
 ```
 
+ACO utilises a similar means of navigation, opting for a nuamced greedy approach to the ground it covers. The Heuristic component ensures that the search is in favour of shorter edges which result in the release of more pheromones throughout the life-cycle of the algorithm. ACO also emplores a utility called Deposit. Not all Ants will deposit the same amount of Pheromones, so throughout the life cycle, more pheromones will depositited proportional to the length of the tour they have found. 
+
+Based on the improvements they have made in finding the shortest path, this will be picked up on and detailed accordingly
+
+``- TSP_ACO_ANT_TOUR (this is the basics for the Heuristic - the all encompassing theory for ACO)``
+```c
+// SELECT NEXT CITY BASED ON PROBABILITIES
+int NEXT = TSP_ACO_SELECT_NEXT(STATE, ACO_STATE, CURRENT, VISITED);
+        
+// DO WE HAVE A VALIDATE SELECTION OF VISITIED CITIES
+if(NEXT < 0 || NEXT >= STATE->CITY_COUNT || VISITED[NEXT])
+{
+    TSP_HANDLE(ACO, TSP_ERROR_ACO, "INVALID CITY SELECTION AT STEP %d, NEXT STEP %d", STEP, NEXT);
+    *DISTANCE = INT_MAX;
+    return;
+}
+
+// UPDATE PATH AND DISTANCE
+PATH[STEP] = NEXT;
+VISITED[NEXT] = 1;
+*DISTANCE += STATE->DIST.MATRIX[CURRENT][NEXT];
+CURRENT = NEXT;
+``` 
+
+``- TSP_ACO_DEPOSIT_ALL``
+```c
+// CALCULATE PHEROMONE DEPOSIT (SHORTER = MORE PHEROMONE)
+double DEPOSIT = TSP_ACO_DEPO / (double)ANT_DIST[ANT];
+
+// DEPOSIT ON ALL EDGES IN THIS ANT'S PATH
+for(int INDEX = 0; INDEX < CITY_COUNT; INDEX++)
+{
+    int FROM = PATHS[ANT][INDEX];
+    int TO = PATHS[ANT][INDEX + 1];
+            
+    // UPDATE BOTH DIRECTIONS
+    ACO_STATE->PHEROMONE[FROM][TO] += DEPOSIT;
+    ACO_STATE->PHEROMONE[TO][FROM] += DEPOSIT;
+}
+```
+
 ## Features:
 
 One of the encompassing features found in this variation of the implementation is a pre-processed macro to handle Improvements seen to the Journey at runtime
@@ -68,14 +109,15 @@ The benefit of having it arranged as so is to be able tm mitigate function calls
 The following will index through each city that is available and print out the current index of the Path against the Name of the City
 
 ```c
-#define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)                                           \
+#define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)                                               \
         do { \
-            printf("[IMPROVEMENT] %s | TOTAL COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST);    \
-            for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)                                    \
-            {                                                                                   \
-                printf("%d -> %s ", PATH[INDEX], STATE->CITY[PATH[INDEX]].NAME);                \
-            }                                                                                   \
-            printf("\n");                                                                       \
+            printf("[IMPROVEMENT] %s | TOTAL COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST);        \
+            for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)                                        \
+            {                                                                                       \
+                printf("%s %1d", STATE->CITY[PATH[INDEX]].NAME, PATH[INDEX]);                       \
+                if(INDEX < CITY_COUNT) printf(" -> ");                                              \
+            }                                                                                       \
+            printf("\n");                                                                           \
         } while(0)
 ``` 
 
