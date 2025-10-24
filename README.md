@@ -13,8 +13,9 @@ Note that some of the implementation was made pre-emptively before the module be
 
 - [Evolutionary Computation](https://github.com/astonHC/CS3_CI/tree/main/EC)
 - [Travelling Salesman Problem - standalone ver](https://github.com/astonHC/CS3_CI/tree/main/TSP)
-- [Particle Swarm Optimisation](https://github.com/astonHC/CS3_CI/tree/main/PSO)
+- [Particle Swarm Optimisation - standalone ver](https://github.com/astonHC/CS3_CI/tree/main/PSO)
 - [Travelling Salesman Problem - coursework ver](https://github.com/astonHC/CS3_CI/tree/main/TSP/coursework)
+- [Particle Swarm Optimsation - coursework ver](https://github.com/astonHC/CS3_CI/tree/main/PSO/cw)
 
 ## Repository Structure & Building:
 
