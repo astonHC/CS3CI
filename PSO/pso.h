@@ -59,6 +59,8 @@
     #define         PSO_VALID_DIMENSIONS(VALUE, MAX)            ((VALUE) >= 0 && (VALUE) < (MAX))
     #define         PSO_VALID_FITNESS(VALUE)                    (!isnan(VALUE) && !isinf(VALUE))
 
+    #define         PSO_RAND(LOWER, UPPER)                      ((LOWER + ((double)rand() / RAND_MAX) * (UPPER - LOWER)))
+
     #define     PSO_MEM_ERROR(VALUE) \
         do { \
             if ((VALUE) == NULL) { \
