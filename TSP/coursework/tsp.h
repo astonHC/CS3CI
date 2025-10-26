@@ -28,6 +28,7 @@
     #define     TSP_OPT_ON              1
     
     #define     TSP_MAX_BUFFER      256
+    #define     TSP_MAX_NAME        64          // USED FOR GENERATING CITY NAMES FOR THE TOUR FROM CSV
 
     #define     TSP_MAX_CITIES      50          // MAX AMOUNT WE HAVE AT A GIVEN TIME
     #define     TSP_CSV_MAX_LINE    256         // ARBITRARY BUFFER VALUE FOR MAX LINE COUNT
@@ -51,6 +52,7 @@
     #define     TSP_RAND_CITY(VALUE)            (rand() % (VALUE))                  // RANDOM CITY AGAINST A VALUE (MAX_CITIES)
 
     #define     TSP_RAND_POS(VALUE)             (rand() % (TSP_STATE.CITY_COUNT))
+    #define     TSP_ROUND(VALUE)                ((int)(VALUE + 0.5))                // ROUND FOR NEAREST WHOLE NUMBER (FOR CSV)
 
     #define     TSP_VALID_DIST(VALUE)           ((VALUE) >= 0 && (VALUE) < INT_MAX)
     #define     TSP_VALID_CITY(VALUE, MAX)      ((VALUE) >= 0 && (VALUE) < (MAX))
@@ -82,8 +84,8 @@
     typedef struct
     {
         char NAME[32];          
-        int X;                  
-        int Y;
+        double X;                  
+        double Y;
 
     } TSP_CITY;
 
@@ -183,7 +185,7 @@
 
     #define TSP_CITY_NAME(NAME, INDEX, X, Y) \
                 do { \
-                    printf("[CITY] -> %12s | INDEX: %d | X: %d  Y: %d\n", NAME, INDEX, X, Y); \
+                    printf("[CITY] -> %12s | INDEX: %d | X: %.4f  Y: %.4f\n", NAME, INDEX, X, Y); \
                 } while(0)
 
     #define TSP_IMPROVE(ALGO, PATH, DIST, CITY_COUNT)                                               \
@@ -216,7 +218,7 @@
     /////////////////////////////////////////////////////
 
     int TSP_INIT(TSP_STATE*, TSP_ALGO);
-    int TSP_ADD_CITY(TSP_STATE*, const char*, int, int);
+    int TSP_ADD_CITY(TSP_STATE*, const char*, double, double);
     int TSP_EUC_DIST(const TSP_CITY*, const TSP_CITY*);
     void TSP_CALC_DIST(TSP_STATE*);
     int TSP_NEAREST(TSP_STATE*);
