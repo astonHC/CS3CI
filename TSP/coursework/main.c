@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 
     if(argc != 3)
     {
-        printf("USAGE: %s --ALGORITHM\n", argv[0]);
+        printf("USAGE: %s --ALGORITHM <csv_file>\n", argv[0]);
         return 1;
     }
 
