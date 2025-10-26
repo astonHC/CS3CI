@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 {
     printf("HARRY CLARK - CS3_CI TSP SOLUTION\n");
 
-    if(argc != 2)
+    if(argc != 3)
     {
         printf("USAGE: %s --ALGORITHM\n", argv[0]);
         return 1;
@@ -20,19 +20,20 @@ int main(int argc, char* argv[])
 
     // DISCERN THE ALGO TYPE BASED ON PROVIDED ARG
     TSP_ALGO ALGO = TSP_ALGO_ARG(argv[1]);
+    const char* CSV = argv[2];
 
-    TSP_STATE STATE;    
+    // LOAD THE CORRESPONDENCE OF THE TSP ALGORITHM
+    TSP_STATE STATE;   
     TSP_INIT(&STATE, ALGO);
 
-    // 20/10/25
-    // COORDS TO DELIBERATELY FORCE THE LOCAL SEARCH TO WORK
-    TSP_ADD_CITY(&STATE, "LONDON", 1000, 20);
-    TSP_ADD_CITY(&STATE, "PARIS", 344, 500);
-    TSP_ADD_CITY(&STATE, "MADRID", 1495, 173);
-    TSP_ADD_CITY(&STATE, "SHANGHAI", 5000, 2812);
-    TSP_ADD_CITY(&STATE, "TOKYO", 5500, 1500);
-    TSP_ADD_CITY(&STATE, "NEW YORK", -3500, 700);
-    TSP_ADD_CITY(&STATE, "MANCHESTER", 10000, 8937);
+    // LOAD THE COORDS WHICH REPRESENT THE CITIES
+    // WITHIN THE TOUR
+
+    if(TSP_LOAD_CSV(&STATE, CSV) != 0)
+    {
+        TSP_ERROR_HANDLE(NONE, TSP_ERROR_NONE, "FAILED TO LOAD CSV FILE: %s\n", CSV);
+        return 1;
+    }
 
     // ALGO CHOICE WILL NOW DYNAMICALLY EXECUTE
     // PROVIDED ALGO TYPE AS PER THE SWITCH
