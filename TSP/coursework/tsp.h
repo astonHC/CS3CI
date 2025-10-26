@@ -26,6 +26,8 @@
     
     #define     TSP_OPT_OFF             0
     #define     TSP_OPT_ON              1
+    
+    #define     TSP_MAX_BUFFER      256
 
     #define     TSP_MAX_CITIES      50          // MAX AMOUNT WE HAVE AT A GIVEN TIME
     #define     TSP_CSV_MAX_LINE    256         // ARBITRARY BUFFER VALUE FOR MAX LINE COUNT
