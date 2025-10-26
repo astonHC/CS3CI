@@ -96,7 +96,7 @@
     // DISTANCE BETWEEN CITIES
     typedef struct
     {
-        int MATRIX[TSP_MAX_CITIES][TSP_MAX_CITIES];         // 2D ARRAY FOR MAX DIST BETWEEN
+        double MATRIX[TSP_MAX_CITIES][TSP_MAX_CITIES];         // 2D ARRAY FOR MAX DIST BETWEEN
         int SIZE;
             
     } TSP_DIST;
@@ -107,7 +107,7 @@
     typedef struct
     {
         int TSP_PATH[TSP_MAX_CITIES + 1];
-        int TSP_TOTAL_DIST;
+        double TSP_TOTAL_DIST;
         int TSP_CITY_COUNT;
         TSP_ALGO ALGO;
 
@@ -219,7 +219,7 @@
 
     int TSP_INIT(TSP_STATE*, TSP_ALGO);
     int TSP_ADD_CITY(TSP_STATE*, const char*, double, double);
-    int TSP_EUC_DIST(const TSP_CITY*, const TSP_CITY*);
+    double TSP_EUC_DIST(const TSP_CITY*, const TSP_CITY*);
     void TSP_CALC_DIST(TSP_STATE*);
     int TSP_NEAREST(TSP_STATE*);
     int TSP_TWO_OPT(TSP_STATE*);
