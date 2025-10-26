@@ -19,8 +19,8 @@
 // WHICH MAKES ACCOUNTING FOR AXIS' A LOT EASIER 
 int TSP_EUC_DIST(const TSP_CITY* CITY_A, const TSP_CITY* CITY_B) 
 {
-    int DIST_X = CITY_A->X - CITY_B->X;
-    int DIST_Y = CITY_A->Y - CITY_B->Y;
+    double DIST_X = CITY_A->X - CITY_B->X;
+    double DIST_Y = CITY_A->Y - CITY_B->Y;
 
     // FORCE TYPE CAST FOR DISTANCE
     // WE LEVERAGE INT FOR GREATER PRECISION
@@ -135,21 +135,9 @@ int TSP_LOAD_CSV(TSP_STATE* STATE,  const char* FILENAME)
         int PARSED = 0;
         
         // CHECK TO SEE IF COORDS ARE SPLIT BASED ON COMMA (UNLIKELY)
-        int COMMA = 0;
-        for(int INDEX = 0; INDEX < CSV_LINE_BUFFER[INDEX] != '\0'; INDEX++)
-        {
-            if(CSV_LINE_BUFFER[INDEX] == ',') { COMMA = 1; break; }
-        }
-
-        if(COMMA)
-        {
-            PARSED = sscanf(CSV_LINE_BUFFER, "%lf,%lf", &X_COORD, &Y_COORD);
-        }
-
-        else
-        {
-            PARSED = sscanf(CSV_LINE_BUFFER, "%lf %lf", &X_COORD, &Y_COORD);
-        }
+        int COMMA = (strchr(CSV_LINE_BUFFER, ',') != NULL);
+        PARSED = COMMA ? sscanf(CSV_LINE_BUFFER, "%lf, %lf", &X_COORD, &Y_COORD) 
+                        : sscanf(CSV_LINE_BUFFER, "%lf %lf", &X_COORD, &Y_COORD);
         
         if(PARSED != 2)
         {
@@ -170,8 +158,8 @@ int TSP_LOAD_CSV(TSP_STATE* STATE,  const char* FILENAME)
         
         // EXPRESSION PERTAINING TOWARDS
         // THE X AND Y HEADERS FOR EACH COLUMN
-        int X = TSP_ROUND(X_COORD);
-        int Y = TSP_ROUND(Y_COORD);
+        double X = X_COORD;
+        double Y = Y_COORD;
         
         // FOR THE SAKE OF DEMONSTRATION
         // MAKE A REPRESENTATION OF THE CITY WITHIN THE 
