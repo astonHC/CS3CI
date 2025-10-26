@@ -71,7 +71,7 @@ int TSP_ALGO_CHOICE(TSP_STATE* STATE, TSP_ALGO ALGO)
             break;
 
         case TSP_ACO:
-            printf("NOT YET IMPLEMENTED");
+            TSP_ACO_BASE(STATE, 500);
             return 1;
 
         case TSP_LS:
@@ -79,10 +79,103 @@ int TSP_ALGO_CHOICE(TSP_STATE* STATE, TSP_ALGO ALGO)
             return 1;
     
         default:
-            printf("INVALID ALGORITHM\n");
-            return 1;
+            exit(1);
         break;
     }
 
+    return 0;
+}
+
+// LOAD THE CORRESPONDING CSV FILE FOR THE ENCOMPASSING ALGORITHM OF CHOICE
+// THIS IS NEEDED AS PER THE REQUIREMENTS OF THE SIGN OFF
+
+int TSP_LOAD_CSV(TSP_STATE* STATE,  const char* FILENAME)
+{
+    FILE* FILE_PTR = NULL;
+    char CSV_LINE_BUFFER[TSP_MAX_BUFFER];
+    int CSV_LINE_NUM = 0;
+    int CSV_COORDS = 0;
+
+    int X, Y = 0;
+
+    FILE_PTR = fopen(FILENAME, "r");
+    if(FILE_PTR == NULL)
+    {
+        TSP_ERROR_HANDLE(NONE, TSP_ERROR_NONE, "FAILED TO LOAD CSV FILE: %s\n", FILE_PTR);
+        return 1;
+    } 
+
+    TSP_HANDLE(NONE, TSP_ERROR_NONE, "LOADING CITIES FROM CSV: %s\n", FILENAME);
+
+    // NOW WE CAN BEGIN TO READ THE FILE LINE BY LINE
+    // THIS IS SIMPLE AS ALL WE ARE CONCERNED WITH IS THE COLUMNS
+    while(fgets(CSV_LINE_BUFFER, sizeof(CSV_LINE_BUFFER), FILE_PTR) != NULL)
+    {
+        CSV_LINE_NUM++;
+
+        // SKIP WHITESPACES CAUSED BY TABS, SPACES OR COMMENTS
+        if(CSV_LINE_BUFFER[0] == '\n' || CSV_LINE_BUFFER[0] == '#') continue;
+
+        // ITERATE THROUGH EACH INSTANCE OF WHITESPACE WITHIN THE
+        // FILE AND DETERMINE IT'S UNICODE REPRESENTTATION 
+        int IS_EMPTY = 1;
+        for(int INDEX = 0; CSV_LINE_BUFFER[INDEX] != '\0'; INDEX++)
+        {
+            if(CSV_LINE_BUFFER[INDEX] != ' ' && CSV_LINE_BUFFER[INDEX] != '\t' && 
+               CSV_LINE_BUFFER[INDEX] != '\n' && CSV_LINE_BUFFER[INDEX] != '\r')
+            {
+                IS_EMPTY = 0;
+                break;
+            }
+        }
+
+        // READ FOR ALL OF THE POSSIBLE COORD
+        // VALUES WITHIN EACH COLUMN
+        double X_COORD, Y_COORD;
+        int PARSED = sscanf(CSV_LINE_BUFFER, "%lf %lf", &X_COORD, &Y_COORD);
+        
+        if(PARSED != 2)
+        {
+            // SKIP HEADER LINE TO PREVENT READING THE
+            // X AND Y NOTATION
+            if(CSV_LINE_NUM == 1)
+            {
+                TSP_HANDLE(NONE, TSP_ERROR_NONE, "SKIPPING HEADER LINE\n", " ");
+            }
+            else
+            {
+                TSP_HANDLE(NONE, TSP_ERROR_NONE, 
+                    "SKIPPING INVALID LINE %d - EXPECTED TWO SET OF COORDINATES FOR X AND Y\n", CSV_LINE_NUM);
+            }
+
+            continue;
+        }
+        
+        // EXPRESSION PERTAINING TOWARDS
+        // THE X AND Y HEADERS FOR EACH COLUMN
+        int X = TSP_ROUND(X_COORD);
+        int Y = TSP_ROUND(Y_COORD);
+        
+        // FOR THE SAKE OF DEMONSTRATION
+        // MAKE A REPRESENTATION OF THE CITY WITHIN THE 
+        // TOUR BASED ON COORDS
+        char NAME[TSP_MAX_NAME];
+        snprintf(NAME, TSP_MAX_NAME, "CITY_%d", CSV_COORDS);
+        
+        if(TSP_ADD_CITY(STATE, NAME, X, Y) == 0)
+        {
+            CSV_COORDS++;
+        }
+        else
+        {
+            TSP_HANDLE(NONE, TSP_ERROR_NONE, 
+                "WARNING: FAILED TO ADD CITY FROM LINE %d\n", CSV_LINE_NUM);
+        }
+    }
+    
+    fclose(FILE_PTR);
+    TSP_HANDLE(NONE, TSP_ERROR_NONE, 
+        "SUCCESSFULLY LOADED %d CITIES FROM CSV\n", CSV_COORDS);
+    
     return 0;
 }
