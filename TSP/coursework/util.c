@@ -132,7 +132,24 @@ int TSP_LOAD_CSV(TSP_STATE* STATE,  const char* FILENAME)
         // READ FOR ALL OF THE POSSIBLE COORD
         // VALUES WITHIN EACH COLUMN
         double X_COORD, Y_COORD;
-        int PARSED = sscanf(CSV_LINE_BUFFER, "%lf %lf", &X_COORD, &Y_COORD);
+        int PARSED = 0;
+        
+        // CHECK TO SEE IF COORDS ARE SPLIT BASED ON COMMA (UNLIKELY)
+        int COMMA = 0;
+        for(int INDEX = 0; INDEX < CSV_LINE_BUFFER[INDEX] != '\0'; INDEX++)
+        {
+            if(CSV_LINE_BUFFER[INDEX] == ',') { COMMA = 1; break; }
+        }
+
+        if(COMMA)
+        {
+            PARSED = sscanf(CSV_LINE_BUFFER, "%lf,%lf", &X_COORD, &Y_COORD);
+        }
+
+        else
+        {
+            PARSED = sscanf(CSV_LINE_BUFFER, "%lf %lf", &X_COORD, &Y_COORD);
+        }
         
         if(PARSED != 2)
         {
