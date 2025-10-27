@@ -18,6 +18,7 @@
 
 // SYSTEM INCLUDES
 
+#include <float.h>
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
@@ -30,7 +31,9 @@
 #else
     #define USE_PSO
 
-        
+    #define         PSO_MAX_PARTICLES           50
+    #define         PSO_MAX_ITER                1000
+    #define         PSO_MAX_DIM                 14              // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND 
 
 #endif
 #endif
