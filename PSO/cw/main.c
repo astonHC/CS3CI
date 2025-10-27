@@ -13,17 +13,36 @@
 // ADJUSTING THE WEIGHT OF PARTICLES BASED ON THEIR CHARACTERISTICS 
 // DURING THE LIFETIME OF THE ALGORITHM
 
-// NESTED INCLUDES
-
 #include "pso.h"
 
 int main(int argc, char* argv[])
 {
     printf("HARRY CLARK - CS3_CI EXPERIMENTAL STUDY\n");
 
-    PSO_STATE STATE;
-    if(PSO_INIT(&STATE, 14) != 0)
+    if(argc != 3)
     {
+        printf("USAGE: %s <train_file> <test_file>\n", argv[0]);
         return 1;
     }
+
+    PSO_STATE STATE;
+    PSO_INIT(&STATE, PSO_MAX_DEM);
+    
+    if(PSO_LOAD_CSV(&STATE.DATASET, argv[1]) != 0) return 1;
+    
+    // INITIAL BOUNDS FOR PSO SWARM
+    PSO_SET_BOUNDS(&STATE, 0, 0.0, 1000.0);
+    
+    // SET BOUNDS AGAINST COEFFICIENTS
+    // TO ALLOW FOR PROPER BOUNDS FOR THE BIAS
+    for(int i = 1; i < PSO_MAX_DEM; i++)
+    {
+        PSO_SET_BOUNDS(&STATE, i, -100.0, 100.0);
+    }
+    
+    PSO_OPTIMISE(&STATE);
+    PSO_HANDLE(NONE, PSO_ERROR_NONE, "FINAL FITNESS: %.6f\n", STATE.STATS.FINAL_FITNESS);
+    
+    free(STATE.DATASET.DATA);    
+    return 0;
 }
