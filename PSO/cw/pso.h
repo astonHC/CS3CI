@@ -210,6 +210,18 @@
     int PSO_INIT(PSO_STATE*, int);
     void PSO_SET_BOUNDS(PSO_STATE*, int, double, double);
     double PSO_DEMAND_FITNESS(const double*, const PSO_DATASET*);
+    void PSO_OPTIMISE(PSO_STATE*);
+
+    // DEFINE THE BASIS FOR ALL OF THE ADAPATIVE STATS
+    // INLINED BECAUSE THIS DOESNT REALLY DESERVE
+    // TO BE IT'S OWN FUNCTION
+    static inline void PSO_INIT_STATS(PSO_STATE* STATE)
+    {
+        STATE->STATS.HISTORY_SIZE = PSO_MAX_ITER;
+        STATE->STATS.GBEST_HISTORY = (double*)calloc(PSO_MAX_ITER, sizeof(double));
+        STATE->STATS.DIVERSITY_HISTORY = (double*)calloc(PSO_MAX_ITER, sizeof(double));
+        STATE->STATS.CONVERGENCE_ITER = -1;
+    }
 
 #endif
 #endif
