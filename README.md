@@ -12,10 +12,10 @@ The following topics and subject areas that will be provided in this repository 
 Note that some of the implementation was made pre-emptively before the module began. Anything shown may be subject to change or to reflect an outdated understanding of the module contents. Though, having said all of this, everything here should still be taken with the due-consideration for the module contents and subsequent preparations made therein.
 
 - [Evolutionary Computation](https://github.com/astonHC/CS3_CI/tree/main/EC)
-- [Travelling Salesman Problem - standalone ver](https://github.com/astonHC/CS3_CI/tree/main/TSP)
+- [Travelling Salesman Problem - standalone lab ver](https://github.com/astonHC/CS3_CI/tree/main/TSP)
 - [Particle Swarm Optimisation - sign-off ver](https://github.com/astonHC/CS3_CI/tree/main/PSO)
 - [Travelling Salesman Problem - sign-off ver](https://github.com/astonHC/CS3_CI/tree/main/TSP/coursework)
-- [Particle Swarm Optimsation - coursework ver](https://github.com/astonHC/CS3_CI/tree/main/PSO/cw)
+- [Particle Swarm Optimsation - experimental study ver](https://github.com/astonHC/CS3_CI/tree/main/PSO/cw)
 
 ## Repository Structure & Building:
 
