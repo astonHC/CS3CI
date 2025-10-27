@@ -31,8 +31,8 @@
 #else
     #define USE_PSO
 
-    #define         PSO_MAX_PARTICLES           50
-    #define         PSO_MAX_ITER                1000
+    #define         PSO_MAX_PARTICLES           30
+    #define         PSO_MAX_ITER                100
     #define         PSO_MAX_IND                 13
     #define         PSO_MAX_DEM                 14              // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
     #define         PSO_MAX_CSV                 100
@@ -45,7 +45,7 @@
     #define         PSO_SOC_INIT                0.5
     #define         PSO_SOC_FIN                 2.5
 
-    #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) > 0 && (MIN) < (MAX))
+    #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) >= 0 && (MIN) < (MAX))
     #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
     #define         PSO_SEED()                  srand((unsigned)time(NULL))
 
@@ -65,7 +65,7 @@
     typedef struct
     {
         double DEMANDS;
-        double INDICTIONS[PSO_MAX_IND];
+        double INDICATIONS[PSO_MAX_IND];
 
     } PSO_DEMAND;
     
@@ -168,7 +168,7 @@
 
     #define PSO_HANDLE(OP, ERROR, MSG, ...) \
             do { \
-                printf("\n[INFO] %c -> %-20s   " MSG "\n", \
+                printf("\n[INFO] %c -> %-20s   " MSG "", \
                     (char)OP, PSO_ERR[ERROR], ##__VA_ARGS__); \
             } while(0)
 
