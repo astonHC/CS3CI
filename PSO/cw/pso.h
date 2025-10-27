@@ -127,6 +127,7 @@
         PSO_SWARM SWARM;
         PSO_BOUND BOUNDS[PSO_MAX_DEM];
         PSO_STATS STATS;
+        PSO_DATASET DATASET;
 
         int DIMENSIONS;
         double CONV_THRESHOLD;
@@ -196,9 +197,9 @@
         do {                                                                                    \
             printf("[PSO-ADAPTIVE] ITERATION %d | FITNESS: %.6f | SOLUTION: ",                  \
                 ITER, FITNESS);                                                                 \
-            for(int DIM = 0; DIM < DIMENSIONS; DIM++)                                           \
+            for(int D = 0; D < DIMENSIONS; D++)                                                 \
             {                                                                                   \
-                printf("%.4f", POSITION[DIM]);                                                  \
+                printf("%.4f", POSITION[D]);                                                    \
                 if(DIM < DIMENSIONS - 1) printf(", ");                                          \
             }                                                                                   \
             printf("\n");                                                                       \
@@ -211,6 +212,10 @@
     void PSO_SET_BOUNDS(PSO_STATE*, int, double, double);
     double PSO_DEMAND_FITNESS(const double*, const PSO_DATASET*);
     void PSO_OPTIMISE(PSO_STATE*);
+
+    typedef PSO_DATASET* DATASET;
+    typedef PSO_PARTICLE* PARTICLE;
+    typedef PSO_SWARM* SWARM;
 
     // DEFINE THE BASIS FOR ALL OF THE ADAPATIVE STATS
     // INLINED BECAUSE THIS DOESNT REALLY DESERVE
