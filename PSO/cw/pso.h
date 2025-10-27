@@ -45,6 +45,7 @@
     #define         PSO_SOC_FIN                 2.5
     #define         PSO_DIV                     0.01
 
+    #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) > 0 && (MIN) < (MAX))
     #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
     #define         PSO_SEED()                  srand((unsigned)time(NULL))
 
@@ -66,7 +67,17 @@
         double DEMANDS;
         double INDICTIONS[PSO_MAX_IND];
 
-    } PSO_DEMAND;   
+    } PSO_DEMAND;
+    
+    // DEFINE THE BASIS FOR THE DATASET
+    // THAT WILL BE TRAINED ON IN RELATION TO THE CSV
+    typedef struct
+    {
+        PSO_DEMAND* DATA;
+        int SIZE;
+        int CAPACITY;
+
+    } PSO_DATASET;
 
     // DEFINE THE BASIS FOR THE PARTICLES WITHIN THE ALGO
     typedef struct
@@ -74,11 +85,56 @@
         double POSITION[PSO_MAX_DEM];
         double VELOCITY[PSO_MAX_DEM];
         double PBEST[PSO_MAX_DEM];
-        double PBEST_FITNESS[PSO_MAX_DEM];
+        double PBEST_FITNESS;
         double CURRENT_FITNESS;
         int STAGNATE;
-        
+        int COUNT;
+
     } PSO_PARTICLE;
+
+    // DEFINE THE BASIS FOR THE SWARM
+    typedef struct
+    {
+        PSO_PARTICLE PARTICLES[PSO_MAX_PARTICLES];
+        int ITERATION;
+        double GBEST[PSO_MAX_DEM];
+        double GBEST_FITNESS;
+
+        int CONVERGED;
+        double DIVERSITY;
+        int STAGNATE;
+
+    } PSO_SWARM;
+
+    // DEFINE THE BASIS FOR TRACKING THE STATISTICS
+    // OF THE RUNTIME AND IMPROVEMENTS OF THE ALGO
+    typedef struct
+    {
+        int HISTORY_SIZE;
+        int CONVERGENCE_ITER;
+        double INIT_FITNESS;
+        double IMPROVEMENT_RATE;
+        double* GBEST_HISTORY;
+        double* FITNESS_HISTORY;
+        double* DIVERSITY_HISTORY;
+
+    } PSO_STATS;
+
+    // DEFINE THE BASIS FOR THE ALL ENCOMPASSING
+    // STATE FOR THE ALGO
+    typedef struct
+    {
+        PSO_SWARM SWARM;
+        PSO_BOUND BOUNDS[PSO_MAX_DEM];
+        PSO_STATS STATS;
+
+        int DIMENSIONS;
+        double CONV_THRESHOLD;
+        double CURRENT_INERTIA;
+        double CURRENT_COG;
+        double CURRENT_SOC;
+
+    } PSO_STATE;
 
     // DEFINE THE BASIS FOR THE ERROR HANDLING 
     // EXCLUSIVE TO THIS IMPLEMENTATION OF PSO
@@ -148,8 +204,12 @@
             printf("\n");                                                                       \
         } while(0)
 
-    #define PSO_VALID_DIM(MIN, MAX)         ((MIN) > 0 && (MIN) < (MAX))
+
     
+    int PSO_LOAD_CSV(PSO_DATASET*, const char*);
+    int PSO_INIT(PSO_STATE*, int);
+    void PSO_SET_BOUNDS(PSO_STATE*, int, double, double);
+    double PSO_DEMAND_FITNESS(const double*, const PSO_DATASET*);
 
 #endif
 #endif
