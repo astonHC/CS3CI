@@ -35,7 +35,8 @@
     #define         PSO_MAX_ITER                1000
     #define         PSO_MAX_IND                 13
     #define         PSO_MAX_DEM                 14              // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
-    #define         PSO_MAX_CONV                20
+    #define         PSO_MAX_CSV                 100
+    #define         PSO_CSV_BUFFER              1024
     
     #define         PSO_MAX_INERTIA             1.2
     #define         PSO_MIN_INERTIA             0.9
@@ -43,7 +44,6 @@
     #define         PSO_COG_FIN                 0.5
     #define         PSO_SOC_INIT                0.5
     #define         PSO_SOC_FIN                 2.5
-    #define         PSO_DIV                     0.01
 
     #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) > 0 && (MIN) < (MAX))
     #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
@@ -113,6 +113,7 @@
         int HISTORY_SIZE;
         int CONVERGENCE_ITER;
         double INIT_FITNESS;
+        double FINAL_FITNESS;
         double IMPROVEMENT_RATE;
         double* GBEST_HISTORY;
         double* FITNESS_HISTORY;
@@ -152,19 +153,6 @@
 
     } PSO_ERROR_TYPE;
 
-    static const char* PSO_ERR[] =
-    {
-        "OK",
-        "INDEX OUT OF BOUNDS",
-        "PARTICLE ERROR",
-        "CONVERGENCE ERROR",
-        "FITNESS ERROR",
-        "DIMENSION ERROR",
-        "FILE IO ERROR",
-        "MEMORY ERROR"
-    };
-
-
     typedef enum
     {
         NONE = 'N',
@@ -172,7 +160,9 @@
         PART = 'P',
         CONV = 'C',
         FIT = 'F',
-        DIM = 'D'
+        DIM = 'D',
+        IO = 'I',
+        MEM = 'M'
 
     } PSO_ERROR_OP;
 
@@ -205,7 +195,17 @@
             printf("\n");                                                                       \
         } while(0)
 
-
+    static const char* PSO_ERR[] =
+    {
+        "OK",
+        "INDEX OUT OF BOUNDS",
+        "PARTICLE ERROR",
+        "CONVERGENCE ERROR",
+        "FITNESS ERROR",
+        "DIMENSION ERROR",
+        "FILE IO ERROR",
+        "MEMORY ERROR"
+    };
     
     int PSO_LOAD_CSV(PSO_DATASET*, const char*);
     int PSO_INIT(PSO_STATE*, int);
@@ -213,6 +213,7 @@
     double PSO_DEMAND_FITNESS(const double*, const PSO_DATASET*);
     void PSO_OPTIMISE(PSO_STATE*);
 
+    typedef PSO_STATE* STATE;
     typedef PSO_DATASET* DATASET;
     typedef PSO_PARTICLE* PARTICLE;
     typedef PSO_SWARM* SWARM;
@@ -222,6 +223,9 @@
     // TO BE IT'S OWN FUNCTION
     static inline void PSO_INIT_STATS(PSO_STATE* STATE)
     {
+        STATE->STATS.INIT_FITNESS = 0.0;
+        STATE->STATS.FINAL_FITNESS = 0.0;
+        STATE->STATS.IMPROVEMENT_RATE = 0.0;
         STATE->STATS.HISTORY_SIZE = PSO_MAX_ITER;
         STATE->STATS.GBEST_HISTORY = (double*)calloc(PSO_MAX_ITER, sizeof(double));
         STATE->STATS.DIVERSITY_HISTORY = (double*)calloc(PSO_MAX_ITER, sizeof(double));
