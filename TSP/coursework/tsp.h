@@ -193,7 +193,7 @@
             printf("[IMPROVEMENT] %s | TOTAL COST: %d | PATH: ", TSP_ALGO_TYPE(ALGO), DIST);        \
             for(int INDEX = 0; INDEX <= CITY_COUNT; INDEX++)                                        \
             {                                                                                       \
-                printf("%s %1d", STATE->CITY[PATH[INDEX]].NAME, PATH[INDEX]);                       \
+                printf("%s", STATE->CITY[PATH[INDEX]].NAME);                       \
                 if(INDEX < CITY_COUNT) printf(" -> ");                                              \
             }                                                                                       \
             printf("\n");                                                                           \
