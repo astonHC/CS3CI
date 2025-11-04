@@ -31,7 +31,10 @@
 #else
     #define USE_PSO
 
-    #define         PSO_MAX_PARTICLES           30
+    #define         PSO_OPT_ON                  1
+    #define         PSO_OPT_OFF                 0
+
+    #define         PSO_MAX_PARTICLES           15
     #define         PSO_MAX_ITER                100
     #define         PSO_MAX_IND                 13
     #define         PSO_MAX_DEM                 14              // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
@@ -44,10 +47,13 @@
     #define         PSO_COG_FIN                 0.5
     #define         PSO_SOC_INIT                0.5
     #define         PSO_SOC_FIN                 2.5
+    #define         PSO_INER_DAMP               -0.5
 
     #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) >= 0 && (MIN) < (MAX))
     #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
     #define         PSO_SEED()                  srand((unsigned)time(NULL))
+
+    #define         PSO_DEBUG                   PSO_OPT_OFF
 
     // DEFINE THE BASIS FOR THE BOUNDARYS FOR THE SEARCH SPACE
     typedef struct
@@ -174,7 +180,7 @@
 
     #define PSO_ERROR_HANDLE(OP, ERROR, MSG, ...) \
             do { \
-                printf("[ERROR] %c -> %-20s   " MSG "\n", \
+                printf("[ERROR] %c -> %-20s   " MSG "", \
                     (char)OP, PSO_ERR[ERROR], ##__VA_ARGS__); \
             } while(0)
 
@@ -217,20 +223,6 @@
     typedef PSO_DATASET* DATASET;
     typedef PSO_PARTICLE* PARTICLE;
     typedef PSO_SWARM* SWARM;
-
-    // DEFINE THE BASIS FOR ALL OF THE ADAPATIVE STATS
-    // INLINED BECAUSE THIS DOESNT REALLY DESERVE
-    // TO BE IT'S OWN FUNCTION
-    static inline void PSO_INIT_STATS(PSO_STATE* STATE)
-    {
-        STATE->STATS.INIT_FITNESS = 0.0;
-        STATE->STATS.FINAL_FITNESS = 0.0;
-        STATE->STATS.IMPROVEMENT_RATE = 0.0;
-        STATE->STATS.HISTORY_SIZE = PSO_MAX_ITER;
-        STATE->STATS.GBEST_HISTORY = (double*)calloc(PSO_MAX_ITER, sizeof(double));
-        STATE->STATS.DIVERSITY_HISTORY = (double*)calloc(PSO_MAX_ITER, sizeof(double));
-        STATE->STATS.CONVERGENCE_ITER = -1;
-    }
 
 #endif
 #endif
