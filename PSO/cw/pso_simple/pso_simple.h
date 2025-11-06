@@ -17,7 +17,7 @@
 
 // NESTED INCLUDES
 
-#include <cw/pso.h>
+#include "../pso.h"
 
 #if defined(USE_SIMPLE)
     #define USE_SIMPLE
