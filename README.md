@@ -16,6 +16,7 @@ Note that some of the implementation was made pre-emptively before the module be
 - [Particle Swarm Optimisation - sign-off ver](https://github.com/astonHC/CS3_CI/tree/main/PSO)
 - [Travelling Salesman Problem - sign-off ver](https://github.com/astonHC/CS3_CI/tree/main/TSP/coursework)
 - [Particle Swarm Optimsation - experimental study ver](https://github.com/astonHC/CS3_CI/tree/main/PSO/cw)
+- [Particle Swarm Optimisation - experiemtnal comparison ver](https://github.com/astonHC/CS3CI/blob/main/PSO/cw/pso_simple/)
 
 ## Repository Structure & Building:
 
