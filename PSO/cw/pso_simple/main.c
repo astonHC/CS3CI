@@ -8,20 +8,36 @@
 // AIMS TO PROVIDE AN UNDERSTANDING FOR HOW TO MITIGATE AN ISSUE
 // RELATED TO THE DAILY DEMAND OF A LOGISTICS COMPANY
 
-// THIS VERSION FOCUSSES ON THE SIMPLIFICATION OF THE CURRENT
-// PSO IMPLEMENTATION - TO PROVIDE A POINT OF COMPARISON TO PROPERLY
-// DISCERN THE BENEFITS OF EITHER OR
-
 // NESTED INCLUDES
 
 #include "pso_simple.h"
 
-int main(void)
+int main(int argc, char* argv[])
 {
     printf("HARRY CLARK - CS3_CI EXPERIMENTAL STUDY\n");
 
+    if(argc != 3)
+    {
+        printf("USAGE: %s <train_file> <test_file>\n", argv[0]);
+        return 1;
+    }
+
     PSO_SIMPLE PS;
     PSO_SIMPLE_INIT(&PS, PSO_MAX_DEM);
-
+    
+    if(PSO_LOAD_CSV(&PS.DATASET, argv[1]) != 0) return 1;
+    
+    // INITIAL BOUNDS FOR PSO SWARM
+    PSO_SIMPLE_BOUNDS(&PS, 0, 0.0, 1000.0);
+    
+    // SET BOUNDS AGAINST COEFFICIENTS
+    // TO ALLOW FOR PROPER BOUNDS FOR THE BIAS
+    for(int i = 1; i < PSO_MAX_DEM; i++)
+    {
+        PSO_SIMPLE_BOUNDS(&PS, i, -100.0, 100.0);
+    }
+    
+    PSO_SIMPLE_OPTIMSISE(&PS);    
+    free(PS.DATASET.DATA);    
     return 0;
 }
