@@ -28,6 +28,10 @@
     #define         PSO_SIMPLE_COG             1.49
     #define         PSO_SIMPLE_SOC             1.49
 
+    // FUNCTION POINTER TO ACT AS A GENERIC IMPLEMENTATION
+    // FOR EVLUATING THE FITNESS LEVEL
+    typedef double(*PSO_FITNESS_EVAL)(const double*, int, void*);
+
     // SIMPLE STATE MACHINE FOR ALL OF THE CORRESPONDENCE
     // WITHIN THE PSO - WE WILL ONLY USE THE MOST BASIC OF FEATURES
     typedef struct
@@ -37,16 +41,19 @@
         PSO_DATASET DATASET;
         PSO_SWARM SWARM;
         PSO_STATS STATS;
+        PSO_FITNESS_EVAL FITNESS;
+        void* USER_DATA;
 
     } PSO_SIMPLE;
 
     typedef PSO_SIMPLE* PS;
-    typedef PSO_PARTICLE* PARTICLE;
     typedef PSO_BOUND* BOUNDS;
 
     int PSO_SIMPLE_INIT(PS, int);
     void PSO_SIMPLE_BOUNDS(PS, int, double, double);
-    void PSO_SIMPLE_OPTIMSISE(PS);
+    void PSO_SIMPLE_OPTIMISE(PS);
+    int PSO_LOAD_CSV(PSO_DATASET*, const char*);
+    double PSO_BASE_FITNESS(const double*, int, void*);
 
 #endif
 #endif
