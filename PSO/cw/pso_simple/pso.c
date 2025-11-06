@@ -67,7 +67,7 @@ void PSO_SIMPLE_BOUNDS(PS STATE, int DIMENSIONS, double LOWER, double UPPER)
 
     #if PSO_DEBUG
     PSO_HANDLE(NONE, PSO_ERROR_NONE, 
-        "DIMENSIONS SET WITH BOUNDS: [L]: %.2f -> [R]: %2.f\n", 
+        "DIMENSIONS SET WITH BOUNDS: [L]: %.2f -> [R]: %.2f\n", 
         LOWER, UPPER);
     #endif
 }
