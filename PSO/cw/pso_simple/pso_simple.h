@@ -41,8 +41,11 @@
     } PSO_SIMPLE;
 
     typedef PSO_SIMPLE* PS;
+    typedef PSO_PARTICLE* PARTICLE;
+    typedef PSO_BOUND* BOUNDS;
 
     int PSO_SIMPLE_INIT(PS, int);
+    void PSO_SIMPLE_BOUNDS(PS, int, double, double);
     void PSO_SIMPLE_OPTIMSISE(PS);
 
 #endif
