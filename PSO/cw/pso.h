@@ -34,20 +34,25 @@
     #define         PSO_OPT_ON                  1
     #define         PSO_OPT_OFF                 0
 
-    #define         PSO_MAX_PARTICLES           15
-    #define         PSO_MAX_ITER                100
+    #define         PSO_MAX_PARTICLES           50
+    #define         PSO_MAX_ITER                1000
     #define         PSO_MAX_IND                 13
-    #define         PSO_MAX_DEM                 14              // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
+    #define         PSO_MAX_DEM                 14                  // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
     #define         PSO_MAX_CSV                 100
     #define         PSO_CSV_BUFFER              1024
     
-    #define         PSO_MAX_INERTIA             1.2
-    #define         PSO_MIN_INERTIA             0.9
-    #define         PSO_COG_INIT                2.5
-    #define         PSO_COG_FIN                 0.5
-    #define         PSO_SOC_INIT                0.5
-    #define         PSO_SOC_FIN                 2.5
+    #define         PSO_MAX_INERTIA             0.9
+    #define         PSO_MIN_INERTIA             0.6
+    #define         PSO_COG_INIT                2.0
+    #define         PSO_COG_FIN                 2.0
+    #define         PSO_SOC_INIT                2.0
+    #define         PSO_SOC_FIN                 2.0
     #define         PSO_INER_DAMP               -0.5
+
+    #define         PSO_VELO_DELTA              0.2
+    #define         PSO_ADAPT_GRAD              1.0
+    #define         PSO_ADAPT_PEAK              10.0
+    #define         PSO_ADAPT_INTER             0.5
 
     #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) >= 0 && (MIN) < (MAX))
     #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
