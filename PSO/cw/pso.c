@@ -127,8 +127,6 @@ static double PSO_PREDICT(const double* PARAMS, const double* INDICATIONS)
         PREDICTION += PARAMS[INDEX + 1] * INDICATIONS[INDEX];
     }
 
-    if(PREDICTION < 0) PREDICTION = 0;
-
     #if PSO_DEBUG
     PSO_HANDLE(NONE, PSO_ERROR_NONE, "PREDICTION: %2.f", PREDICTION);
     #endif
@@ -195,6 +193,10 @@ static double PSO_SWARM_DIVERSITY(STATE S)
     {
         for(int ITERATOR = INDEX + 1; ITERATOR < PSO_MAX_PARTICLES; ITERATOR++)
         {
+            // RESET PROPERLY FOR EACH PAIR
+            // IT IS ONLY ZEROED OUT BY DEFAULT BECAUSE OF C'S "GARBAGE VALUE INIT"
+            DISTANCE = 0.0;
+
             // DEFINE THE EUCLIDEAN DISTANCE BETWEEN PARTICLES
             // HELPS WITH BEING ABLE TO GAIN A GREATER SENSE
             // OF CONVERGENCE
@@ -204,14 +206,16 @@ static double PSO_SWARM_DIVERSITY(STATE S)
                                     S->SWARM.PARTICLES[ITERATOR].POSITION[DIMENSIONS];
 
                 DISTANCE += DIFFERENCE * DIFFERENCE;
-
-                #if PSO_DEBUG
-                PSO_HANDLE(DIM, PSO_ERROR_NONE, "DIFFERENCE BETWEEN SWARM DIVERSITY: %.6f\n", DISTANCE);
-                #endif
             }
 
-            AVG_DIST += sqrt(DISTANCE);
+            // APPLY EUC_DIST AGAINST THE DISTANCE BETWEEN EACH PAIR
+            double EUC_DIST = sqrt(DISTANCE);
+            AVG_DIST += EUC_DIST;
             COMP++;
+
+            #if PSO_DEBUG
+            PSO_HANDLE(DIM, PSO_ERROR_NONE, "DIFFERENCE BETWEEN SWARM DIVERSITY: %.6f\n", EUC_DIST);
+            #endif
         }
     }
 
