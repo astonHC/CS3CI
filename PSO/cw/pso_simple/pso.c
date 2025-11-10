@@ -38,7 +38,7 @@ double PSO_BASE_FITNESS(const double* POSITION, int DIMENSIONS, void* USER_DATA)
     if(STATE->DATASET.SIZE == 0)
     {
         PSO_ERROR_HANDLE(OOB, PSO_ERROR_OOB, "DATASET IS EMPTY\n", "");
-        return DBL_MAX;
+        exit(1);
     }
 
     // CALCULATE PREDICTED DEMAND BASED ON THE LINEAR COMBINATION
