@@ -121,10 +121,11 @@ int PSO_SIMPLE_INIT(PS STATE, int DIMENSIONS)
         "INERTIA: %.5f (FIXED)\n"
         "COGNITIVE: %.5f (FIXED)\n"
         "SOCIAL: %.5f (FIXED)\n" 
-        "MAX_ITER: %d\n",
+        "ITERATIONS: %d\n"
+        "MAX CSV BUFFER: %d\n",
         PSO_MAX_PARTICLES, DIMENSIONS,
         PSO_SIMPLE_INERTIA, PSO_SIMPLE_COG,
-        PSO_SIMPLE_SOC, PSO_MAX_ITER);
+        PSO_SIMPLE_SOC, PSO_MAX_ITER, PSO_MAX_CSV);
 
     return 0;
 }
