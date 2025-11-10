@@ -220,7 +220,8 @@ static double PSO_SWARM_DIVERSITY(STATE S)
             }
 
             // APPLY EUC_DIST AGAINST THE DISTANCE BETWEEN EACH PAIR
-            double EUC_DIST = DISTANCE;
+            double EUC_DIST = sqrt(DISTANCE);
+            AVG_DIST += EUC_DIST;
             COMP++;
 
             #if PSO_DEBUG
@@ -372,7 +373,7 @@ static void PSO_UPDATE_ADAPT(STATE S)
         // APPLY SAID BOOST TO THE INERTIA
         S->CURRENT_INERTIA *= BOOST;
         
-        #if PSO_HANDLE
+        #if PSO_DEBUG
         PSO_HANDLE(NONE, PSO_ERROR_NONE,
             "ITERATION: %d -> CURRENT INERTIA RANGE -> %.4f < %.4f -> ORIGINAL INERTIA: %.4f -> %.4f (BOOST FACTOR: %.3fx)",
                 S->SWARM.ITERATION, S->SWARM.DIVERSITY, 
