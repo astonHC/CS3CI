@@ -122,7 +122,7 @@ double PSO_PREDICT(const double* PARAMS, const double* INDICATIONS)
     // THE PARAMS ENCOMPASSING EACH PREDICTION AGAINST THE BIAS (aN)
     double PREDICTION = PARAMS[0];
 
-    for(int INDEX = 0; INDEX < PSO_MAX_IND; INDEX++)
+    for(int INDEX = 1; INDEX < PSO_MAX_IND; INDEX++)
     {
         PREDICTION += PARAMS[INDEX + 1] * INDICATIONS[INDEX];
     }
