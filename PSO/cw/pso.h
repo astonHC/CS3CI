@@ -38,11 +38,11 @@
     #define         PSO_MAX_ITER                1000
     #define         PSO_MAX_IND                 13
     #define         PSO_MAX_DEM                 14                  // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
-    #define         PSO_MAX_CSV                 100
+    #define         PSO_MAX_CSV                 256                 // MAX AMOUNT OF DATA AVAILABLE FOR THE CSV 
     #define         PSO_CSV_BUFFER              1024
     
     #define         PSO_MAX_INERTIA             0.9
-    #define         PSO_MIN_INERTIA             0.6
+    #define         PSO_MIN_INERTIA             0.4
     #define         PSO_COG_INIT                2.0
     #define         PSO_COG_FIN                 2.0
     #define         PSO_SOC_INIT                2.0
@@ -54,9 +54,17 @@
     #define         PSO_ADAPT_PEAK              10.0
     #define         PSO_ADAPT_INTER             0.5
 
+    #define         PSO_DIV_THRES               0.15
+    #define         PSO_DIV_BOOST               2.0
+    #define         PSO_MUT_RATE                0.3
+    #define         PSO_DIV_CLAMP               1.0
+
+    #define         PSO_TRUCK                   35
+
     #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) >= 0 && (MIN) < (MAX))
     #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
     #define         PSO_SEED()                  srand((unsigned)time(NULL))
+    #define         PSO_CLAMP_INER(STATE)       (STATE->CURRENT_INERTIA = (PSO_MAX_INERTIA * PSO_DIV_CLAMP))
 
     #define         PSO_DEBUG                   PSO_OPT_OFF
 
@@ -222,6 +230,7 @@
     int PSO_INIT(PSO_STATE*, int);
     void PSO_SET_BOUNDS(PSO_STATE*, int, double, double);
     double PSO_DEMAND_FITNESS(const double*, const PSO_DATASET*);
+    double PSO_PREDICT(const double*, const double*);
     void PSO_OPTIMISE(PSO_STATE*);
 
     typedef PSO_STATE* STATE;
