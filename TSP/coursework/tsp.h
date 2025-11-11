@@ -32,15 +32,15 @@
 
     #define     TSP_MAX_CITIES      50          // MAX AMOUNT WE HAVE AT A GIVEN TIME
     #define     TSP_CSV_MAX_LINE    256         // ARBITRARY BUFFER VALUE FOR MAX LINE COUNT
-    #define     TSP_ACO_ANTS        100
+    #define     TSP_ACO_ANTS        30
     #define     TSP_ACO_PHER_RATE   1.0
-    #define     TSP_ACO_ALPHA       1.0         // ANT COLONY IMPORTANCE       
-    #define     TSP_ACO_HEUR        2.0         // ANT COLONY HEURISTIC 
+    #define     TSP_ACO_ALPHA       2.0         // ANT COLONY IMPORTANCE       
+    #define     TSP_ACO_HEUR        1.0         // ANT COLONY HEURISTIC 
     #define     TSP_ACO_EVAP        0.5         // ANT COLONY EVAPORATION RATE 
-    #define     TSP_ACO_DEPO        10.0       // ANT COLONY PHEROMONE DEPOSIT   
-    #define     TSP_ACO_ELITE       1.5         // ANT COLONY ELITE FACTOR
-    #define     TSP_ACO_ITER_RATE   50          // ANT COLONY ITERATION RATE
-    #define     TSP_DIAG_INTERVAL   100
+    #define     TSP_ACO_DEPO        8.0       // ANT COLONY PHEROMONE DEPOSIT   
+    #define     TSP_ACO_ELITE       2.0         // ANT COLONY ELITE FACTOR
+    #define     TSP_ACO_ITER_RATE   100          // ANT COLONY ITERATION RATE
+    #define     TSP_DIAG_INTERVAL   50
     
     // ANT COLONY PHERMONE MIN AND MAX EDGES
     // USED TO PREVENT SPILLOVER INTO OOB INDEXXING
@@ -57,7 +57,7 @@
     #define     TSP_VALID_DIST(VALUE)           ((VALUE) >= 0 && (VALUE) < INT_MAX)
     #define     TSP_VALID_CITY(VALUE, MAX)      ((VALUE) >= 0 && (VALUE) < (MAX))
 
-    #define     TSP_DEBUG_OPT                   TSP_OPT_OFF 
+    #define     TSP_DEBUG_OPT                   TSP_OPT_OFF
 
         // SIMPLE IMPLEMENTATION FOR BEING ABLE TO CATCH
         // AND STRINGIFY ERROR MESSAGES FOR ALLOCATING STRUCTS
@@ -206,7 +206,7 @@
     #if TSP_DEBUG_OPT
     #define TSP_DEBUG_DIST(OP, ERROR, FROM, TO, DIST, MSG, ...)                                     \
         do {                                                                                        \
-            printf("[DEBUG] %c -> %s ->     FROM: %d,   TO: %d,     DIST: %1d" MSG "\n",            \
+            printf("[DEBUG] %c -> %s ->     FROM: %d,   TO: %d,     DIST: %.4f" MSG "\n",            \
                 (char)OP, TSP_ERR_MSG[ERROR], FROM, TO, DIST, ##__VA_ARGS__);                           \
         } while(0)
     #else
@@ -224,7 +224,7 @@
     int TSP_NEAREST(TSP_STATE*);
     int TSP_TWO_OPT(TSP_STATE*);
     void TSP_ACO_INIT(TSP_ACO_STATE*, int);
-    int TSP_ACO_BASE(TSP_STATE*, int);
+    int TSP_ACO_BASE(TSP_STATE*);
     void TSP_RESULT(const TSP_STATE*);
 
     int TSP_RAND(TSP_STATE*);
@@ -247,4 +247,3 @@
 
 #endif
 #endif
-
