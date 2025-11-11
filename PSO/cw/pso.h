@@ -54,19 +54,23 @@
     #define         PSO_ADAPT_PEAK              10.0
     #define         PSO_ADAPT_INTER             0.5
 
-    #define         PSO_DIV_THRES               0.15
+    #define         PSO_DIV_THRES               0.5
     #define         PSO_DIV_BOOST               2.0
     #define         PSO_MUT_RATE                0.3
     #define         PSO_DIV_CLAMP               1.0
 
+    #define         PSO_STAG_THRES              10
+
     #define         PSO_TRUCK                   35
 
-    #define         PSO_VALID_DIM(MIN, MAX)     ((MIN) >= 0 && (MIN) < (MAX))
-    #define         PSO_RAND()                  ((double)rand()/ (double)RAND_MAX)
-    #define         PSO_SEED()                  srand((unsigned)time(NULL))
-    #define         PSO_CLAMP_INER(STATE)       (STATE->CURRENT_INERTIA = (PSO_MAX_INERTIA * PSO_DIV_CLAMP))
+    #define         PSO_VALID_DIM(MIN, MAX)                     ((MIN) >= 0 && (MIN) < (MAX))
+    #define         PSO_RAND()                                  ((double)rand()/ (double)RAND_MAX)
+    #define         PSO_SEED()                                  srand((unsigned)time(NULL))
+    #define         PSO_CLAMP_INER(STATE)                       (STATE->CURRENT_INERTIA = (PSO_MAX_INERTIA * PSO_DIV_CLAMP))
+    #define         PSO_CLAMP_BOUNDS(BOUNDS, INDEX)             ((BOUNDS)[INDEX].UPPER - (BOUNDS)[INDEX].LOWER)
 
     #define         PSO_DEBUG                   PSO_OPT_OFF
+
 
     // DEFINE THE BASIS FOR THE BOUNDARYS FOR THE SEARCH SPACE
     typedef struct
@@ -118,6 +122,7 @@
         int ITERATION;
         double GBEST[PSO_MAX_DEM];
         double GBEST_FITNESS;
+        double LAST_GBEST_FITNESS;
 
         int CONVERGED;
         double DIVERSITY;
@@ -150,10 +155,12 @@
         PSO_DATASET DATASET;
 
         int DIMENSIONS;
+        int STAG_COUNTER;
         double CONV_THRESHOLD;
         double CURRENT_INERTIA;
         double CURRENT_COG;
         double CURRENT_SOC;
+        double SEARCH_SPACE;
 
     } PSO_STATE;
 
@@ -237,6 +244,7 @@
     typedef PSO_DATASET* DATASET;
     typedef PSO_PARTICLE* PARTICLE;
     typedef PSO_SWARM* SWARM;
+    typedef PSO_BOUND* BOUNDS;
 
 #endif
 #endif
