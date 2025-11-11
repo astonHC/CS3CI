@@ -71,7 +71,7 @@ int TSP_ALGO_CHOICE(TSP_STATE* STATE, TSP_ALGO ALGO)
             break;
 
         case TSP_ACO:
-            TSP_ACO_BASE(STATE, 10);
+            TSP_ACO_BASE(STATE);
             return 1;
 
         case TSP_LS:
