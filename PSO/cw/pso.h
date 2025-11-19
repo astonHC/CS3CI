@@ -34,7 +34,7 @@
     #define         PSO_OPT_ON                  1
     #define         PSO_OPT_OFF                 0
 
-    #define         PSO_MAX_PARTICLES           50
+    #define         PSO_MAX_PARTICLES           30
     #define         PSO_MAX_ITER                1000
     #define         PSO_MAX_IND                 13
     #define         PSO_MAX_DEM                 14                  // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
@@ -54,10 +54,11 @@
     #define         PSO_ADAPT_PEAK              10.0
     #define         PSO_ADAPT_INTER             0.5
 
-    #define         PSO_DIV_THRES               0.5
-    #define         PSO_DIV_BOOST               2.0
+    #define         PSO_DIV_THRES               1.0
+    #define         PSO_DIV_BOOST               0.2
     #define         PSO_MUT_RATE                0.3
     #define         PSO_DIV_CLAMP               1.0
+    #define         PSO_CAP                     1.3
 
     #define         PSO_STAG_THRES              10
 
@@ -221,17 +222,7 @@
             printf("\n");                                                                       \
         } while(0)
 
-    static const char* PSO_ERR[] =
-    {
-        "OK",
-        "INDEX OUT OF BOUNDS",
-        "PARTICLE ERROR",
-        "CONVERGENCE ERROR",
-        "FITNESS ERROR",
-        "DIMENSION ERROR",
-        "FILE IO ERROR",
-        "MEMORY ERROR"
-    };
+    extern const char* PSO_ERR[];
     
     int PSO_LOAD_CSV(PSO_DATASET*, const char*);
     int PSO_INIT(PSO_STATE*, int);
