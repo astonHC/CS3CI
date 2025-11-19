@@ -497,8 +497,8 @@ static void PSO_UPDATE_GBEST(STATE S)
         else
         {   
             PSO_HANDLE(NONE, PSO_ERROR_NONE, 
-            "GLOBAL BEST IMPROVED FROM: %.6f TO %.6f", 
-            PREV_GBEST, S->SWARM.GBEST_FITNESS);
+            "GLOBAL BEST IMPROVED FROM: %.6f TO %.6f, ITERATION: %d", 
+            PREV_GBEST, S->SWARM.GBEST_FITNESS, S->SWARM.ITERATION);
         }
     }
 }
