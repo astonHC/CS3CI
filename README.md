@@ -26,33 +26,32 @@ To run each solution, look at he provided build instructions in each folder's RE
 
 ## Features:
 
-One of the many features exclusive to this project is the ``ERROR_TRACE`` handling for being able to properly discern the inner workings 
+One of the many features exclusive to this project is the ``ERROR_HANDLE`` handling for being able to properly discern the inner workings 
 of all of the contents encompassing this repository
 
-```c
-// ACCESSES AN OPERATION FROM AN ENUM
-// THE ERROR STRING, AND ANY VARIDATIC ARGS 
-// AS PER EACH UNIQUE USE CASE
+Each of these error handlers have been retooled to suit the needs of each algorithm type - a statically-available macro with respective error messages per algorithm
 
-#if ERROR_TRACE_HOOK    
-    #define ERROR_TRACE(OP, ERR, MSG, ...) \
-        printf("[TRACE] %c -> %s - " MSG "\n", \
-              (char)(OP), \
-                  EVO_TRACE_ERR[(ERR)], \
-              ##__VA_ARGS__)
-#else
-    #define ERROR_TRACE(OP, ERR, MSG, ...) ((void)0)
-#endif
+A similar addition has been made to properly discern the improvement rates of each algorithm using the respective Improvement macro
+In the case of PSO, its a simple checker which looks through the dimensions of the current swarm to determine the current improvement based on updated position ([see](https://github.com/astonHC/CS3CI/tree/main/PSO/cw))
+
+```c
+#define PSO_ERROR_HANDLE(OP, ERROR, MSG, ...) \
+            do { \
+                printf("[ERROR] %c -> %-20s   " MSG "", \
+                    (char)OP, PSO_ERR[ERROR], ##__VA_ARGS__); \
+            } while(0)
 ```
 
-#### Example Usage of ERROR_TRACE:
-
 ```c
-// main.c - ACCESS THE FINAL STRING IF THE WELLBEING OF THE PERSON IS MATCHED
-if(CURRENT_POPULATION[0].WELLBEING == EC_STRLEN)
-{
-    ERROR_TRACE(EVO, TRACE_OK, "SOLUTION FOUND IN GENERATION %d", GEN);
-    printf("FINAL STRING: %s\n", CURRENT_POPULATION[0].CHROMOSOMES);
-    break;
-}
+#define PSO_IMPROVE(ITER, FITNESS, POSITION, DIMENSIONS)                                    \
+        do {                                                                                    \
+            printf("[PSO-ADAPTIVE] ITERATION %d | FITNESS: %.6f | SOLUTION: ",                  \
+                ITER, FITNESS);                                                                 \
+            for(int D = 0; D < DIMENSIONS; D++)                                                 \
+            {                                                                                   \
+                printf("%.4f", POSITION[D]);                                                    \
+                if(DIM < DIMENSIONS - 1) printf(", ");                                          \
+            }                                                                                   \
+            printf("\n");                                                                       \
+        } while(0)
 ```
