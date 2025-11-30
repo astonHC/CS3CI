@@ -434,8 +434,8 @@ static void PSO_UPDATE_ADAPT(STATE S)
         double ORIGINAL = S->CURRENT_INERTIA;
         PSO_HANDLE(NONE, PSO_ERROR_NONE,
             "DIVERSITY: %.4f < THRESHOLD: %.4f -> "
-            "ORIGINAL INERTIA: %.4f -> BOOSTED: %.4f (BOOST: %.3fx)",
-            S->SWARM.DIVERSITY, PSO_DIV_THRES, ORIGINAL, S->CURRENT_INERTIA, BOOST);
+            "ORIGINAL INERTIA: %.4f -> BOOSTED: %.4f (BOOST: %.3fx) -> ITERATION: %d",
+            S->SWARM.DIVERSITY, PSO_DIV_THRES, ORIGINAL, S->CURRENT_INERTIA, BOOST, S->SWARM.ITERATION);
         #endif
     }
 
