@@ -45,12 +45,12 @@ The difference being is that there is no longer a need for determining a demand 
 The structure of this folder is akin to the likeness of any other folder within this repo.
 I have split it up based on the simple implementation and the in-depth implementation to make testing easier.
 
-To build either or, run the following within the respective folders:
+To build either or, simple run the following
 
 ```
-gcc --std=c99 -pedantic main.c pso.c -o pso_adapt -lm
+make
 
-gcc --std=c99 -pedantic main.c pso.c -o pso_simple -lm
+make simple
 ``` 
 
 ## Academic References:
