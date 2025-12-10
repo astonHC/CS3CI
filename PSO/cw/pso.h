@@ -33,34 +33,35 @@
 
     #define         PSO_OPT_ON                  1
     #define         PSO_OPT_OFF                 0
+    #define         PSO_DEBUG                   PSO_OPT_OFF
 
-    #define         PSO_MAX_PARTICLES           30
+    #define         PSO_MAX_PARTICLES           50                  
     #define         PSO_MAX_ITER                1000
-    #define         PSO_MAX_IND                 13
+    #define         PSO_MAX_IND                 13                  // MAX AMOUNT OF INDICATORS AS PER CASE STUDY
     #define         PSO_MAX_DEM                 14                  // ACCOUNTING FOR 1 BIAS FOR EVERY 13 WEIGHTS FOR DEMAND
     #define         PSO_MAX_CSV                 256                 // MAX AMOUNT OF DATA AVAILABLE FOR THE CSV 
-    #define         PSO_CSV_BUFFER              1024
+    #define         PSO_CSV_BUFFER              1024                // MAX CSV BUFFER FOR READING DATA
     
-    #define         PSO_MAX_INERTIA             0.9
+    #define         PSO_MAX_INERTIA             0.9                 
     #define         PSO_MIN_INERTIA             0.4
-    #define         PSO_COG_INIT                2.0
-    #define         PSO_COG_FIN                 2.0
-    #define         PSO_SOC_INIT                2.0
-    #define         PSO_SOC_FIN                 2.0
-    #define         PSO_INER_DAMP               -0.5
+    #define         PSO_COG_MAX                 2.5
+    #define         PSO_COG_MIN                 1.0
+    #define         PSO_SOC_MIN                 1.0
+    #define         PSO_SOC_MAX                 2.5 
+    #define         PSO_INER_DAMP               -0.5                // INERTIA DAMPENING FOR SWARM PARTICLES POSITION
 
-    #define         PSO_VELO_DELTA              0.2
-    #define         PSO_ADAPT_GRAD              1.0
-    #define         PSO_ADAPT_PEAK              10.0
-    #define         PSO_ADAPT_INTER             0.5
+    #define         PSO_VELO_DELTA              0.2                 // DELTATIME OF VELOCITY FOR PARTICLE SWARM
+    #define         PSO_ADAPT_GRAD              1.0                 // GRADUAL EXPONENTIAL RATE OF ADAPTIVE BOOST
+    #define         PSO_ADAPT_PEAK              10.0                // ADAPATION INFLECTION RATE BASED ON SIGMOID CURVE
+    #define         PSO_ADAPT_INTER             0.5                 // THE POINT AT WHICH POINTS INTERCEPT ON THE SIGMOID CURVE
 
-    #define         PSO_DIV_THRES               1.0
-    #define         PSO_DIV_BOOST               0.2
+    #define         PSO_DIV_THRES               0.15                
+    #define         PSO_DIV_BOOST               0.05
     #define         PSO_MUT_RATE                0.3
-    #define         PSO_DIV_CLAMP               1.0
-    #define         PSO_CAP                     1.3
+    #define         PSO_DIV_CLAMP               1.0                 // DIVERSITY CLAMP BASED ON INTERVENTION RATE
+    #define         PSO_CAP                     1.0                 // CAP RANGE BASED ON CURRENT INERTIA
 
-    #define         PSO_STAG_THRES              10
+    #define         PSO_STAG_THRES              25                  // STAGNATION THRESHOLD PER ITERATION
 
     #define         PSO_TRUCK                   35
 
@@ -69,9 +70,6 @@
     #define         PSO_SEED()                                  srand((unsigned)time(NULL))
     #define         PSO_CLAMP_INER(STATE)                       (STATE->CURRENT_INERTIA = (PSO_MAX_INERTIA * PSO_DIV_CLAMP))
     #define         PSO_CLAMP_BOUNDS(BOUNDS, INDEX)             ((BOUNDS)[INDEX].UPPER - (BOUNDS)[INDEX].LOWER)
-
-    #define         PSO_DEBUG                   PSO_OPT_OFF
-
 
     // DEFINE THE BASIS FOR THE BOUNDARYS FOR THE SEARCH SPACE
     typedef struct
