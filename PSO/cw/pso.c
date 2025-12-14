@@ -145,7 +145,7 @@ double PSO_PREDICT(const double* PARAMS, const double* INDICATIONS)
     if(PREDICTION < 0) PREDICTION = 0;
 
     #if PSO_DEBUG
-    PSO_HANDLE(NONE, PSO_ERROR_NONE, "PREDICTION: %2.f", PREDICTION);
+    PSO_HANDLE(NONE, PSO_ERROR_NONE, "PREDICTION: %.2f", PREDICTION);
     #endif
 
     return PREDICTION;
@@ -664,3 +664,4 @@ int PSO_LOAD_CSV(PSO_DATASET* DATASET, const char* FILENAME)
     
     return 0;
 }
+
