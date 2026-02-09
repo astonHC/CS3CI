@@ -48,7 +48,9 @@ I have split it up based on the simple implementation and the in-depth implement
 To build either or, simple run the following
 
 ```
-make
+make clean
+
+make mpvel
 
 make simple
 ``` 
