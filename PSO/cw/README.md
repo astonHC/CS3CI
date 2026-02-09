@@ -50,7 +50,7 @@ To build either or, simple run the following
 ```
 make clean
 
-make mpvel
+make novel
 
 make simple
 ``` 
