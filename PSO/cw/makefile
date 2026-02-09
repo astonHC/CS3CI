@@ -34,27 +34,26 @@ SIMPLE_O_FILES	:= $(patsubst $(PSO_SIMPLE_DIR)/%.c,$(BUILD_DIR)/simple_%.o,$(SIM
 ## 			    TARGETS
 #####################################
 
-.PHONY: all clean dirs cw simple
+.PHONY: all clean dirs
 
-all: dirs cw
+all: dirs
 
 dirs:
 	@mkdir -p $(BUILD_DIR)
 
-cw: dirs $(BUILD_DIR)/pso_cw.exe
-
-$(BUILD_DIR)/pso_cw.exe: $(CW_O_FILES)
-	$(CC) $(CW_O_FILES) -o $@ -lm
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(CW_H_FILES)
-	$(CC) -c $(CSTD) $(WARNINGS) $(CFLAGS) -o $@ $<
-
+novel:	dirs $(BUILD_DIR)/pso_novel.exe
 simple: dirs $(BUILD_DIR)/pso_simple.exe
 
 $(BUILD_DIR)/pso_simple.exe: $(SIMPLE_O_FILES)
 	$(CC) $(SIMPLE_O_FILES) -o $@ -lm
 
 $(BUILD_DIR)/simple_%.o: $(PSO_SIMPLE_DIR)/%.c $(SIMPLE_H_FILES)
+	$(CC) -c $(CSTD) $(WARNINGS) $(CFLAGS) -o $@ $<
+
+$(BUILD_DIR)/pso_novel.exe: $(CW_O_FILES)
+	$(CC) $(CW_O_FILES) -o $@ -lm
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(CW_H_FILES)
 	$(CC) -c $(CSTD) $(WARNINGS) $(CFLAGS) -o $@ $<
 
 clean:
