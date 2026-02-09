@@ -145,7 +145,7 @@ double PSO_PREDICT(const double* PARAMS, const double* INDICATIONS)
     if(PREDICTION < 0) PREDICTION = 0;
 
     #if PSO_DEBUG
-    PSO_HANDLE(NONE, PSO_ERROR_NONE, "PREDICTION: %.2f", PREDICTION);
+    PSO_HANDLE(NONE, PSO_ERROR_NONE, "PREDICTION: %2.f", PREDICTION);
     #endif
 
     return PREDICTION;
@@ -595,7 +595,7 @@ int PSO_LOAD_CSV(PSO_DATASET* DATASET, const char* FILENAME)
     FILE* FILE_PTR = fopen(FILENAME, "r");
     if(!FILE_PTR) 
     { 
-        PSO_ERROR_HANDLE(IO, PSO_ERROR_FILE, "FAILED TO OPEN FILE: %s", FILENAME); 
+        PSO_ERROR_HANDLE(IO, PSO_ERROR_FILE, "FAILED TO OPEN FILE: %s\n", FILENAME); 
         return 1;
     }
 
@@ -606,8 +606,8 @@ int PSO_LOAD_CSV(PSO_DATASET* DATASET, const char* FILENAME)
 
     if(!DATASET->DATA)
     {
+        PSO_ERROR_HANDLE(MEM, PSO_ERROR_MEM, "NO VALID DATA SETS WITHIN THE LOAD CSV FILE: %s", FILENAME);
         fclose(FILE_PTR);
-        PSO_ERROR_HANDLE(MEM, PSO_ERROR_MEM, "NO VALID DATA SETS WITHIN THE LOAD CSV FILE: %s", FILE_PTR);
         free(DATASET->DATA);
         return 1;
     }
@@ -664,4 +664,3 @@ int PSO_LOAD_CSV(PSO_DATASET* DATASET, const char* FILENAME)
     
     return 0;
 }
-
